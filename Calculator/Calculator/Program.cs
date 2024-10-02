@@ -28,18 +28,28 @@ namespace Calculator
                         Console.WriteLine("zadejte druhe cislo");
                         string scndNum = Console.ReadLine();
                         float b = float.Parse(scndNum);
-                        Console.WriteLine("zadejte co s nima (moznosti jsou soucet, rozdil a mocneni)");
-                        string operace = Console.ReadLine();
+                        Console.WriteLine("zadejte co s nima (moznosti jsou soucet, rozdil, nasobeni a deleni)"); //pridal jsem nasobeni a deleni
+                        string operaceA = Console.ReadLine();
                         
                         x = 0;
-                        if (operace == "soucet")
+                        if (operaceA == "soucet")
                         {
                             result = a + b;
                             Console.WriteLine("vysledek je " + result);
                         }
-                        else if (operace == "rozdil")
+                        else if (operaceA == "rozdil")
                         {
                             result = a - b;
+                            Console.WriteLine("vysledek je " + result);
+                        }
+                        else if (operaceA == "nasobeni")
+                        {
+                            result = a * b;
+                            Console.WriteLine("vysledek je " + result);
+                        }
+                        else if (operaceA == "deleni")
+                        {
+                            result = a / b;
                             Console.WriteLine("vysledek je " + result);
                         }
                         else
@@ -51,22 +61,35 @@ namespace Calculator
                     else if (odpovedA == "ne")
                     { 
                         x = 0;
-                        Console.WriteLine("zadejte co s tim cislem (moznosti jsou mocneni a odmocnovani)");
-                        string odpovedB = Console.ReadLine();
-                        if (odpovedB == "mocneni")
+                        Console.WriteLine("zadejte co s tim cislem (moznosti jsou mocneni, odmocnovani a faktorial)"); //krome mocneni a odmocnovani jsem taky pridal operaci faktorial
+                        string operaceB = Console.ReadLine();
+                        if (operaceB == "mocneni")
                         {
                             Console.WriteLine("na kolikatou chcete mocnit?");
                             string mocnina = Console.ReadLine();
                             float mocninaCislo = float.Parse(mocnina);
-                            result = Math.Pow(a, (mocninaCislo));
+                            result = 1;
+                            for (int i = 0; i < mocninaCislo; i++)
+                            {
+                                result = result * a;
+                            }
                             Console.WriteLine("vysledek je " + result);
                         }
-                        else if (odpovedB == "odmocnovani")
+                        else if (operaceB == "odmocnovani")
                         {
                             Console.WriteLine("na kolikatou chcete odmocnovat?");
                             string odmocnina = Console.ReadLine();
                             float odmocninaCislo = float.Parse(odmocnina);
-                            result = Math.Pow(a, (1 / odmocninaCislo)); //tohle jsem si nasel na internetu na stack overflow
+                            result = Math.Pow(a, (1 / odmocninaCislo)); //tohle jsem si nasel na internetu ve stack overflow
+                            Console.WriteLine("vysledek je " + result);
+                        }
+                        else if (operaceB == "faktorial")
+                        {
+                            result = 1;
+                            for (int i = 1; i < a+1; i++)
+                            {
+                                result = result * i;
+                            }                            
                             Console.WriteLine("vysledek je " + result);
                         }
                         else
