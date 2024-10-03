@@ -61,7 +61,7 @@ namespace Calculator
                     else if (odpovedA == "ne")
                     { 
                         x = 0;
-                        Console.WriteLine("zadejte co s tim cislem (moznosti jsou mocneni, odmocnovani a faktorial)"); //krome mocneni a odmocnovani jsem taky pridal operaci faktorial
+                        Console.WriteLine("zadejte co s tim cislem (moznosti jsou mocneni, odmocnovani, faktorial a prevod, coz znamena prevod na dvojkovou soustavu)"); //krome mocneni a odmocnovani jsem taky pridal operaci faktorial
                         string operaceB = Console.ReadLine();
                         if (operaceB == "mocneni")
                         {
@@ -90,6 +90,22 @@ namespace Calculator
                             {
                                 result = result * i;
                             }                            
+                            Console.WriteLine("vysledek je " + result);
+                        }
+                        else if (operaceB == "prevod") //tady jsem pridal prevod na dvojkovou soustavu
+                        {
+                            while (a>1)
+                            {
+                                float y = 1;
+                                float i = 0;
+                                for (i = 0; a > Math.Pow(2, (i + 1)); i++)
+                                {
+                                    y = y * 2;
+                                }
+                                result = result + Math.Pow(10,(i));
+                                a = a - y;
+                            }
+                            result = result + a;
                             Console.WriteLine("vysledek je " + result);
                         }
                         else
