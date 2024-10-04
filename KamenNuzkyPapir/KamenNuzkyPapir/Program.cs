@@ -115,10 +115,7 @@ namespace KamenNuzkyPapir
                 {
                     Console.WriteLine("chcete jit znovu?(ano/ne)");
                     string odpovedOpakovani = Console.ReadLine();
-                    if (odpovedOpakovani == "ano")
-                    {
-                        opakovani = 1;
-                    }
+                    if (odpovedOpakovani == "ano") opakovani = 1;                    
                 }
                 
             } while (opakovani != 0);
