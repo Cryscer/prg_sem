@@ -80,7 +80,7 @@ namespace Calculator
                             Console.WriteLine("na kolikatou chcete odmocnovat?");
                             string odmocnina = Console.ReadLine();
                             float odmocninaCislo = float.Parse(odmocnina);
-                            result = Math.Pow(a, (1 / odmocninaCislo)); //tohle jsem si nasel na internetu ve stack overflow
+                            result = Math.Pow(a, (1 / odmocninaCislo)); //Math.Pow jsem si nasel na internetu ve stack overflow
                             Console.WriteLine("vysledek je " + result);
                         }
                         else if (operaceB == "faktorial")
@@ -97,7 +97,7 @@ namespace Calculator
                             while (a>1)
                             {
                                 float y = 1;
-                                float i = 0;
+                                float i;
                                 for (i = 0; a > Math.Pow(2, (i + 1)); i++)
                                 {
                                     y = y * 2;
