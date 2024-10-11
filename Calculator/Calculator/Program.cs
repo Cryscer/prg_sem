@@ -86,27 +86,37 @@ namespace Calculator
                         else if (operationB == "faktorial")
                         {
                             result = 1;
-                            for (int i = 1; i < inputA+1; i++)
+                            for (int i = 1; i < inputA + 1; i++)
                             {
                                 result = result * i;
-                            }                            
+                            }
                             Console.WriteLine("vysledek je " + result);
                         }
                         else if (operationB == "prevod") //tady jsem pridal prevod na dvojkovou soustavu
                         {
-                            while (inputA>1)
+                            int aButInt = (int)inputA;
+                            if (aButInt < 0)
                             {
-                                float y = 1;
-                                float i = 0;
-                                for (i = 0; inputA > Math.Pow(2, (i + 1)); i++)
-                                {
-                                    y = y * 2;
-                                }
-                                result = result + Math.Pow(10,(i));
-                                inputA = inputA - y;
+                                Console.WriteLine("prosim zadejte kladne cislo");
+                                x = 1;
                             }
-                            result = result + inputA;
-                            Console.WriteLine("vysledek je " + result);
+                            else
+                            {
+                                while (aButInt>1)
+                                {
+                                    int y = 1;
+                                    int i;
+                                    for (i = 0; aButInt > Math.Pow(2, (i + 1)); i++)
+                                    {
+                                        y = y * 2;
+                                    }
+                                    result = result + Math.Pow(10,(i));
+                                    aButInt = aButInt - y;
+                                }
+                                result = result + aButInt;
+                                Console.WriteLine("vysledek je " + result);
+                            }
+                            
                         }
                         else
                         {
