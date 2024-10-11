@@ -76,32 +76,52 @@ namespace Calculator
                             Console.WriteLine("vysledek je " + result);
                         }
                         else if (operationB == "odmocnovani")
-                        {
-                            Console.WriteLine("na kolikatou chcete odmocnovat?");
-                            string root = Console.ReadLine();
-                            float rootExponent = float.Parse(root);
-                            result = Math.Pow(inputA, (1 / rootExponent)); //tohle jsem si nasel na internetu ve stack overflow
-                            Console.WriteLine("vysledek je " + result);
-                        }
-                        else if (operationB == "faktorial")
-                        {
-                            result = 1;
-                            for (int i = 1; i < inputA + 1; i++)
-                            {
-                                result = result * i;
-                            }
-                            Console.WriteLine("vysledek je " + result);
-                        }
-                        else if (operationB == "prevod") //tady jsem pridal prevod na dvojkovou soustavu
-                        {
-                            int aButInt = (int)inputA;
-                            if (aButInt < 0)
+                        {   
+                            if (inputA < 0)
                             {
                                 Console.WriteLine("prosim zadejte kladne cislo");
                                 x = 1;
                             }
                             else
                             {
+                                Console.WriteLine("na kolikatou chcete odmocnovat?");
+                                string root = Console.ReadLine();
+                                float rootExponent = float.Parse(root);
+                                result = Math.Pow(inputA, (1 / rootExponent)); //tohle jsem si nasel na internetu ve stack overflow
+                                Console.WriteLine("vysledek je " + result);   
+                            }
+                            
+                        }
+                        else if (operationB == "faktorial")
+                        {
+                            if (inputA < 0)
+                            {
+                                Console.WriteLine("prosim zadejte kladne cislo");
+                                x = 1;
+                            }
+                            else
+                            {
+                                int aButInt = (int)inputA;
+                                Console.WriteLine(inputA + " prevedeno na " + aButInt);
+                                result = 1;
+                                for (int i = 1; i < aButInt + 1; i++)
+                                {
+                                    result = result * i;
+                                }
+                                Console.WriteLine("vysledek je " + result);
+                            }
+                        }
+                        else if (operationB == "prevod") //tady jsem pridal prevod na dvojkovou soustavu
+                        {
+                            int aButInt = (int)inputA;                           
+                            if (aButInt < 0)
+                            {
+                                Console.WriteLine("prosim zadejte kladne cislo");
+                                x = 1;
+                            }
+                            else
+                            {   
+                                Console.WriteLine(inputA + " prevedeno na " + aButInt);
                                 while (aButInt>1)
                                 {
                                     int y = 1;
