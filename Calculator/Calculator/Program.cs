@@ -49,8 +49,17 @@ namespace Calculator
                         }
                         else if (operationA == "deleni")
                         {
-                            result = inputA / inputB;
-                            Console.WriteLine("vysledek je " + result);
+                            if (inputB == 0)
+                            {
+                                Console.WriteLine("nulou nelze delit");
+                                x = 1;
+                            }
+                            else
+                            {
+                                result = inputA / inputB;
+                                Console.WriteLine("vysledek je " + result);
+                            }
+                            
                         }
                         else
                         {
@@ -126,7 +135,7 @@ namespace Calculator
                                 {
                                     int y = 1;
                                     int i;
-                                    for (i = 0; aButInt > Math.Pow(2, (i + 1)); i++)
+                                    for (i = 0; aButInt >= Math.Pow(2, (i+1)); i++)
                                     {
                                         y = y * 2;
                                     }
