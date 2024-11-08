@@ -14,7 +14,21 @@ namespace SupermarketPrices
             prices["banany"] = 6.48;
             prices["mleko"] = 20.90;
             prices["okurka"] = 10.90;
-            Console.WriteLine(prices.Keys);
+            Console.WriteLine("co chcete udelat?");
+            string command = Console.ReadLine();
+            switch (command)
+            {
+                case "ukazat list" :
+                    Console.WriteLine("list zbozi:");
+                    foreach(KeyValuePair<string, double> kvp in prices) Console.WriteLine(kvp.Key);
+                    break;
+                
+            }
+                
+            
+            
+                
+                        
             string name1 = Console.ReadLine();
             prices[name1] = float.Parse(Console.ReadLine());
             Console.WriteLine(prices[name1]);
