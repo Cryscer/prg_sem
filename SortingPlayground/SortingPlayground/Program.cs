@@ -23,17 +23,18 @@ namespace SortingPlayground
              */
             bool repeat = true;
             while (repeat)
+            {
                 repeat = false;
                 for (int i = 0; i < sortedArray.Length - 1; i++)
-                {                   
+                {
                     if (sortedArray[i] > sortedArray[i + 1])
                     {
-                        (sortedArray[i], sortedArray[i + 1]) = (sortedArray[i + 1], sortedArray[i]);                    
+                        (sortedArray[i], sortedArray[i + 1]) = (sortedArray[i + 1], sortedArray[i]);
                         repeat = true;
                     }
-                foreach (int item in sortedArray) Console.Write(item + ", ");
-                Console.WriteLine();                    
                 }
+            }
+                
             return sortedArray;
         }
 
@@ -43,6 +44,23 @@ namespace SortingPlayground
             /*
              * TODO: Naimplementuj selection sort.
              */
+            for (int i = 0;i < sortedArray.Length;i++)
+            {
+                int minValue = Int32.MaxValue;
+                int minValueIndex = -1;
+                bool noSwap = true;
+                for (int j = 0 + i; j < sortedArray.Length; j++)
+                {
+                    if (sortedArray[j] < minValue)
+                    {
+                        minValue = sortedArray[j];
+                        minValueIndex = j;
+                        noSwap = false;
+                    }
+                }
+                if (noSwap) minValueIndex = i;
+                (sortedArray[i], sortedArray[minValueIndex]) = (sortedArray[minValueIndex], sortedArray[i]);              
+            }
             return sortedArray;
         }
 
