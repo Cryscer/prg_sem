@@ -25,6 +25,8 @@ namespace Battleships
             for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O"; 
                  
             List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L"};
+            List<string> shipTypes = new List<string> { "Torpédoborec", "Ponorka", "Křižník", "Bitevní loď", "Letadlová loď" };
             Console.WriteLine("      Vaše pole");
             PrintArray(playerField);
             string[,] computerField = (string[,])playerField.Clone();
@@ -32,56 +34,60 @@ namespace Battleships
             PrintArray(computerField);
             bool repeat;
 
-            do
+            for (int i = 0; i < shipTypes.Count; i++)
             {
-                repeat = false;
-                try
+                do
                 {
-                    Console.WriteLine("");
-                    Console.WriteLine("Napište řádek od 1 do 10");
-                    int xCoordinate = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Napište sloupec od a do j");
-                    int yCoordinate = columns.IndexOf(Console.ReadLine()) + 1;
-                    Console.WriteLine("Napište směr orientace lodě (nahoru, doprava, dolů, doleva)");
-                    string direction = Console.ReadLine();
-                    switch (direction)
+                    repeat = false;
+                    try
                     {
-                        case "nahoru":
-                            {
-                                playerField[xCoordinate - 1 - 1, yCoordinate - 1] = "T";
-                                break;
-                            }
-                        case "doprava":
-                            {
-                                playerField[xCoordinate - 1, yCoordinate - 1 + 1] = "T";
-                                break;
-                            }
-                        case "dolů":
-                            {
-                                playerField[xCoordinate - 1 + 1, yCoordinate - 1] = "T";
-                                break;
-                            }
-                        case "doleva":
-                            {
-                                playerField[xCoordinate - 1, yCoordinate - 1 - 1] = "T";
-                                break;
-                            }
-                        default: 
-                            {
-                                Console.WriteLine("error");
-                                repeat = true;
-                                break;
-                            };
+                        Console.WriteLine("Umístěte " + shipTypes[i]);
+                        int shipIndex = i;
+                        Console.WriteLine("Napište řádek od 1 do 10");
+                        int xCoordinate = int.Parse(Console.ReadLine()) - 1;
+                        Console.WriteLine("Napište sloupec od a do j");
+                        int yCoordinate = columns.IndexOf(Console.ReadLine());
+                        Console.WriteLine("Napište směr orientace lodě (nahoru, doprava, dolů, doleva)");
+                        string direction = Console.ReadLine();
+                        switch (direction)
+                        {
+                            case "nahoru":
+                                {
+                                    for (int j = 0; j < shipIndex + 1; j++) playerField[xCoordinate - 1 - j, yCoordinate] = shipTypesLetters[shipIndex];
+                                    break;
+                                }
+                            case "doprava":
+                                {
+                                    for (int j = 0; j < shipIndex + 1; j++) playerField[xCoordinate, yCoordinate + 1 + j] = shipTypesLetters[shipIndex];
+                                    break;
+                                }
+                            case "dolů":
+                                {
+                                    for (int j = 0; j < shipIndex + 1; j++) playerField[xCoordinate + 1 + j, yCoordinate] = shipTypesLetters[shipIndex];
+                                    break;
+                                }
+                            case "doleva":
+                                {
+                                    for (int j = 0; j < shipIndex + 1; j++) playerField[xCoordinate, yCoordinate - 1 - j] = shipTypesLetters[shipIndex];
+                                    break;
+                                }
+                            default:
+                                {
+                                    Console.WriteLine("error");
+                                    repeat = true;
+                                    break;
+                                };
+                        }
+                        playerField[xCoordinate, yCoordinate] = shipTypesLetters[shipIndex];
                     }
-                    playerField[xCoordinate - 1, yCoordinate - 1] = "T";
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("error");
-                    repeat = true;
-                }
-            } while (repeat);
-            PrintArray(playerField);
+                    catch (Exception)
+                    {
+                        Console.WriteLine("error");
+                        repeat = true;
+                    }
+                } while (repeat);
+                PrintArray(playerField);
+            }                                           
 
             Console.ReadLine();
         }
