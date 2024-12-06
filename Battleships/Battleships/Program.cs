@@ -21,23 +21,23 @@ namespace Battleships
             Console.WriteLine();
             Console.WriteLine("    Pole nepřítele");
             Console.WriteLine("   a b c d e f g h i j");
-            for (int i = 0; i < arrayPrintPlayer.GetLength(0); i++)
+            for (int i = 0; i < arrayPrintPC.GetLength(0); i++)
             {
                 if (i == 9) Console.Write(i + 1 + " "); else Console.Write(i + 1 + "  ");
-                for (int j = 0; j < arrayPrintPlayer.GetLength(1); j++) Console.Write(arrayPrintPlayer[i, j] + " ");
+                for (int j = 0; j < arrayPrintPC.GetLength(1); j++) Console.Write(arrayPrintPC[i, j] + " ");
                 Console.WriteLine();
             }
         }
         static void Main(string[] args)
         {
             string[,] playerField = new string[10, 10];
-            for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O"; 
-                 
+            for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O";
+            string[,] computerField = (string[,])playerField.Clone();
+            PrintArray(playerField, computerField);
+            
             List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
             List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L"};
-            List<string> shipTypes = new List<string> { "Torpédoborec", "Ponorka", "Křižník", "Bitevní loď", "Letadlová loď" };           
-            string[,] computerField = (string[,])playerField.Clone();
-            PrintArray(playerField, computerField);            
+            List<string> shipTypes = new List<string> { "Torpédoborec", "Ponorka", "Křižník", "Bitevní loď", "Letadlová loď" };                                               
             bool repeat;
 
             for (int i = 0; i < shipTypes.Count; i++)
@@ -143,7 +143,6 @@ namespace Battleships
                 } while (repeat);
                 PrintArray(playerField, computerField);
             }                                           
-
             Console.ReadLine();
         }
     }
