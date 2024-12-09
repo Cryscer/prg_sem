@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+  
 
 namespace Battleships
 {
@@ -196,11 +197,37 @@ namespace Battleships
             string[,] playerField = new string[10, 10];
             for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O";
             string[,] computerField = (string[,])playerField.Clone();
+            string[,] computerFieldVisual = (string[,])playerField.Clone();
             Console.WriteLine("      Vaše pole");
             PrintArray(playerField);
             ComputerPlacement(computerField);
+
+            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
+            bool fireAgain;
+            string shipDetector;
             
-                                                       
+            do
+            {
+                Console.WriteLine("Napište do jakého řádku chcete pálit");
+                int xCoordinate = int.Parse(Console.ReadLine()) - 1;
+                Console.WriteLine("Napište do jakého sloupce chcete pálit");
+                int yCoordinate = columns.IndexOf(Console.ReadLine());
+                if (shipTypesLetters.Contains(computerField[xCoordinate, yCoordinate]))
+                {
+                    shipDetector = computerField[xCoordinate, yCoordinate];
+                    computerFieldVisual[xCoordinate, yCoordinate] = "X";
+                    fireAgain = true;
+                    foreach (string i in computerField) if (i == shipDetector) { } else { computerFieldVisual[xCoordinate + 1, yCoordinate + 1] = ""; }
+                }
+                else
+                {
+                    computerFieldVisual[xCoordinate, yCoordinate] = "B";
+                    fireAgain = false;
+                }
+                PrintArray(computerFieldVisual);
+            } while (fireAgain);
+            
             Console.ReadLine();
         }
     }
