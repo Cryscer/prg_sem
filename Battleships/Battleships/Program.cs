@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
   
@@ -142,8 +144,7 @@ namespace Battleships
                 {
                     repeat = false;
                     try
-                    {
-                        Console.WriteLine(shipTypesLetters[i]);
+                    {                        
                         int shipIndex = i;
                         int xCoordinate = rng.Next(0, 10);
                         int yCoordinate = rng.Next(0, 10);
@@ -189,11 +190,74 @@ namespace Battleships
                     }   
                 } while (repeat);               
             }
-            Console.WriteLine("   Pole nepřítele");
-            PrintArray(computerPlacementArray);
+        }
+        static void ShootingPlayer(string[,] computerField, string[,] computerFieldVisual)
+        {
+            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
+            bool fireAgain;
+            bool errorRepeat = false;
+            int xCoordinate = 0, yCoordinate = 0;
+            do
+            {
+                do
+                {
+                    try
+                    {
+                        errorRepeat = false;
+                        Console.WriteLine("Napište do jakého řádku chcete pálit");
+                        xCoordinate = int.Parse(Console.ReadLine()) - 1;
+                        Console.WriteLine("Napište do jakého sloupce chcete pálit");
+                        yCoordinate = columns.IndexOf(Console.ReadLine());
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("error");
+                        errorRepeat = true;
+                    }
+                } while (errorRepeat);
+                Console.WriteLine("T = trefa, V = vedle ");
+                if (shipTypesLetters.Contains(computerField[xCoordinate, yCoordinate]))
+                {
+                    computerFieldVisual[xCoordinate, yCoordinate] = "T";
+                    fireAgain = true;                    
+                }
+                else
+                {
+                    computerFieldVisual[xCoordinate, yCoordinate] = "V";
+                    fireAgain = false;
+                }
+                Console.WriteLine("   Pole nepřítele");
+                PrintArray(computerFieldVisual);
+            } while (fireAgain);
+        }
+        static void ShootingComputer(string[,] playerField)
+        {
+            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
+            bool fireAgain;
+            Random rng = new Random();
+            do
+            {
+                int xCoordinate = rng.Next(0, 10);
+                int yCoordinate = rng.Next(0, 10);
+                Console.WriteLine("T = trefa, V = vedle ");
+                if (shipTypesLetters.Contains(playerField[xCoordinate, yCoordinate]))
+                {
+                    playerField[xCoordinate, yCoordinate] = "T";
+                    fireAgain = true;
+                }
+                else
+                {
+                    playerField[xCoordinate, yCoordinate] = "V";
+                    fireAgain = false;
+                }
+                Console.WriteLine("      Vaše pole");
+                PrintArray(playerField);
+            } while (fireAgain);
         }
         static void Main(string[] args)
         {
+            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
             string[,] playerField = new string[10, 10];
             for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O";
             string[,] computerField = (string[,])playerField.Clone();
@@ -201,33 +265,23 @@ namespace Battleships
             Console.WriteLine("      Vaše pole");
             PrintArray(playerField);
             ComputerPlacement(computerField);
+            Console.WriteLine("   Pole nepřítele");
+            PrintArray(computerFieldVisual);
 
-            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
-            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
-            bool fireAgain;
-            string shipDetector;
-            
-            do
-            {
-                Console.WriteLine("Napište do jakého řádku chcete pálit");
-                int xCoordinate = int.Parse(Console.ReadLine()) - 1;
-                Console.WriteLine("Napište do jakého sloupce chcete pálit");
-                int yCoordinate = columns.IndexOf(Console.ReadLine());
-                if (shipTypesLetters.Contains(computerField[xCoordinate, yCoordinate]))
-                {
-                    shipDetector = computerField[xCoordinate, yCoordinate];
-                    computerFieldVisual[xCoordinate, yCoordinate] = "X";
-                    fireAgain = true;
-                    foreach (string i in computerField) if (i == shipDetector) { } else { computerFieldVisual[xCoordinate + 1, yCoordinate + 1] = ""; }
-                }
+            bool end = false;
+            while (end == false)
+            {    
+                end = true;
+                ShootingPlayer(computerField, computerFieldVisual);                
+                foreach (string i in computerField) if (shipTypesLetters.Contains(i)) end = false;
+                if (end == true) Console.WriteLine("Vyhráli jste!");
                 else
                 {
-                    computerFieldVisual[xCoordinate, yCoordinate] = "B";
-                    fireAgain = false;
+                    ShootingComputer(playerField);
+                    foreach (string i in playerField) if (shipTypesLetters.Contains(i)) end = false;
+                    if (end == true) Console.WriteLine("Konec hry");
                 }
-                PrintArray(computerFieldVisual);
-            } while (fireAgain);
-            
+            }
             Console.ReadLine();
         }
     }
