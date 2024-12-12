@@ -191,7 +191,7 @@ namespace Battleships
                 } while (repeat);               
             }
         }
-        static void ShootingPlayer(string[,] computerField, string[,] computerFieldVisual)
+        static void ShootingPlayer(string[,] computerField, string[,] computerFieldVisual) // ve funkcích střílení jsem ponechal stejná jména array jako v mainu, jelikož mi případalo, že jejich jména sedí a měnit je by byla jen extra práce
         {
             List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
             List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
@@ -262,24 +262,31 @@ namespace Battleships
             for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O";
             string[,] computerField = (string[,])playerField.Clone();
             string[,] computerFieldVisual = (string[,])playerField.Clone();
+            PlayerPlacement(playerField); //umístění lodí pro počítač a hráče jsem rozdělil do dvou funkcí kvůli writeline instrukcím/nápovědám
             Console.WriteLine("      Vaše pole");
             PrintArray(playerField);
             ComputerPlacement(computerField);
             Console.WriteLine("   Pole nepřítele");
             PrintArray(computerFieldVisual);
-
+            bool playerWin;
             bool end = false;
             while (end == false)
             {    
+                playerWin = true;
                 end = true;
-                ShootingPlayer(computerField, computerFieldVisual);                
-                foreach (string i in computerField) if (shipTypesLetters.Contains(i)) end = false;
-                if (end == true) Console.WriteLine("Vyhráli jste!");
+                ShootingPlayer(computerField, computerFieldVisual); 
+                foreach (string i in computerField) if (shipTypesLetters.Contains(i))
+                    {
+                        end = false;
+                        playerWin = false;
+                    }
+                if ((end == true) && (playerWin = true)) Console.WriteLine("Vyhráli jste!");
                 else
                 {
+                    end = true;
                     ShootingComputer(playerField);
                     foreach (string i in playerField) if (shipTypesLetters.Contains(i)) end = false;
-                    if (end == true) Console.WriteLine("Konec hry");
+                    if ((end == true)&&(playerWin == false)) Console.WriteLine("Konec hry");
                 }
             }
             Console.ReadLine();
