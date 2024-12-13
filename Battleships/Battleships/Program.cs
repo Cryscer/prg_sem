@@ -262,9 +262,9 @@ namespace Battleships
             for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O";
             string[,] computerField = (string[,])playerField.Clone();
             string[,] computerFieldVisual = (string[,])playerField.Clone();
-            PlayerPlacement(playerField); //umístění lodí pro počítač a hráče jsem rozdělil do dvou funkcí kvůli writeline instrukcím/nápovědám
             Console.WriteLine("      Vaše pole");
             PrintArray(playerField);
+            PlayerPlacement(playerField); //umístění lodí pro počítač a hráče jsem rozdělil do dvou funkcí kvůli writeline instrukcím/nápovědám            
             ComputerPlacement(computerField);
             Console.WriteLine("   Pole nepřítele");
             PrintArray(computerFieldVisual);
