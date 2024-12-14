@@ -13,10 +13,13 @@ namespace Battleships
     {
         static void PrintArray(string[,] arrayToPrint)
         {
-            Console.WriteLine("   a b c d e f g h i j");
+            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o" };
+            Console.Write("  ");
+            for (int k = 0;k < arrayToPrint.GetLength(1);k++) Console.Write(" " + columns[k]);
+            Console.WriteLine();
             for (int i = 0; i < arrayToPrint.GetLength(0); i++)
             {
-                if (i == 9) Console.Write(i + 1 + " "); else Console.Write(i + 1 + "  ");
+                if (i > 8) Console.Write(i + 1 + " "); else Console.Write(i + 1 + "  ");
                 for (int j = 0; j < arrayToPrint.GetLength(1); j++) Console.Write(arrayToPrint[i, j] + " ");
                 Console.WriteLine();
             }
@@ -24,7 +27,7 @@ namespace Battleships
         }
         static void PlayerPlacement(string[,] playerPlacementArray)
         {
-            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o" };
             List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
             List<string> shipTypes = new List<string> { "Torpédoborec", "Ponorka", "Křižník", "Bitevní loď", "Letadlová loď" };
             bool repeat;
@@ -34,12 +37,12 @@ namespace Battleships
                 {
                     repeat = false;
                     try
-                    {
+                    {                        
                         Console.WriteLine(shipTypes[i]);
                         int shipIndex = i;
-                        Console.WriteLine("Napište řádek od 1 do 10");
+                        Console.WriteLine("Napište řádek od 1 do " + playerPlacementArray.GetLength(0).ToString());
                         int xCoordinate = int.Parse(Console.ReadLine()) - 1;
-                        Console.WriteLine("Napište sloupec od a do j");
+                        Console.WriteLine("Napište sloupec od a do " + columns[playerPlacementArray.GetLength(1) - 1]);
                         int yCoordinate = columns.IndexOf(Console.ReadLine());
                         Console.WriteLine("Napište směr orientace lodě (nahoru, doprava, dolů, doleva)");
                         string direction = Console.ReadLine();
@@ -146,8 +149,8 @@ namespace Battleships
                     try
                     {                        
                         int shipIndex = i;
-                        int xCoordinate = rng.Next(0, 10);
-                        int yCoordinate = rng.Next(0, 10);
+                        int xCoordinate = rng.Next(0, computerPlacementArray.GetLength(1));
+                        int yCoordinate = rng.Next(0, computerPlacementArray.GetLength(0));
                         int direction = rng.Next(1, 5);
                         switch (direction)
                         {
@@ -193,7 +196,7 @@ namespace Battleships
         }
         static void ShootingPlayer(string[,] computerField, string[,] computerFieldVisual) // ve funkcích střílení jsem ponechal stejná jména array jako v mainu, jelikož mi případalo, že jejich jména sedí a měnit je by byla jen extra práce
         {
-            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o" };
             List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
             bool fireAgain;
             bool errorRepeat = false;
@@ -238,8 +241,8 @@ namespace Battleships
             Random rng = new Random();
             do
             {
-                int xCoordinate = rng.Next(0, 10);
-                int yCoordinate = rng.Next(0, 10);
+                int xCoordinate = rng.Next(0, playerField.GetLength(1));
+                int yCoordinate = rng.Next(0, playerField.GetLength(0));
                 Console.WriteLine("T = trefa, V = vedle ");
                 if (shipTypesLetters.Contains(playerField[xCoordinate, yCoordinate]))
                 {
@@ -257,8 +260,31 @@ namespace Battleships
         }
         static void Main(string[] args)
         {
+            List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o" };
             List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
-            string[,] playerField = new string[10, 10];
+            bool fieldMeasurementRepeat; // implementace custom polí
+            int horizontalLength = 0;
+            int verticalLength = 0;
+            do {
+                try
+                {
+                    fieldMeasurementRepeat = false;
+                    Console.WriteLine("Zadejte horizontální délku pole (5-15)");
+                    horizontalLength = int.Parse(Console.ReadLine());
+                    if ((horizontalLength < 5) || (horizontalLength > 15)) { Console.WriteLine("Zadejte validní hodnotu"); fieldMeasurementRepeat = true; }
+                    else
+                    {
+                        Console.WriteLine("Zadejte vertikální výšku pole (5-15)");
+                        verticalLength = int.Parse(Console.ReadLine());
+                        if ((verticalLength < 5) || (verticalLength > 15)) { Console.WriteLine("Zadejte validní hodnotu"); fieldMeasurementRepeat = true; }
+                    }
+                } catch (Exception)
+                {
+                    Console.WriteLine("error");
+                    fieldMeasurementRepeat = true;
+                }
+            } while (fieldMeasurementRepeat);
+            string[,] playerField = new string[ horizontalLength, verticalLength ];
             for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) playerField[i, j] = "O";
             string[,] computerField = (string[,])playerField.Clone();
             string[,] computerFieldVisual = (string[,])playerField.Clone();
@@ -270,10 +296,43 @@ namespace Battleships
             PrintArray(computerFieldVisual);
             bool playerWin;
             bool end = false;
+            bool sonar = true;
+            int sonarXCoordinate, sonarYCoordinate;
+            bool sonarRepeat;
+
             while (end == false)
             {    
                 playerWin = true;
-                end = true;
+                end = true;               
+                if (sonar) //implementace sonaru
+                {
+                    do
+                    {
+                        try
+                        {
+                            sonarRepeat = false;
+                            Console.WriteLine("Chtěli byste použít sonar? (odhalí pole 3*3 na soupeřově poli) ano/ne");
+                            string sonarAnswer = Console.ReadLine();
+                            if (sonarAnswer == "ano")
+                            {
+                                Console.WriteLine("Vyberte řádek středu čtverce 3*3");
+                                sonarXCoordinate = int.Parse(Console.ReadLine()) - 1;
+                                Console.WriteLine("Vyberte sloupec střed čtverce 3*3");
+                                sonarYCoordinate = columns.IndexOf(Console.ReadLine());
+                                for (int i = -1; i < 2; i++)
+                                {
+                                    for (int j = -1; j < 2; j++)
+                                    {
+                                        computerFieldVisual[sonarXCoordinate + i, sonarYCoordinate + j] = computerField[sonarXCoordinate + i, sonarYCoordinate + j];
+                                    }
+                                }
+                                Console.WriteLine("   Pole nepřítele");
+                                PrintArray(computerFieldVisual);
+                                sonar = false;
+                            }
+                        } catch (Exception) { Console.WriteLine("error"); sonarRepeat = true; }
+                    } while (sonarRepeat);
+                }               
                 ShootingPlayer(computerField, computerFieldVisual); 
                 foreach (string i in computerField) if (shipTypesLetters.Contains(i))
                     {
