@@ -198,9 +198,9 @@ namespace Battleships
         {
             List<string> columns = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o" };
             List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
-            bool fireAgain;
-            bool errorRepeat = false;
-            int xCoordinate = 0, yCoordinate = 0;
+            bool fireAgain = false;
+            bool errorRepeat;
+            int xCoordinate, yCoordinate;
             do
             {
                 do
@@ -212,6 +212,18 @@ namespace Battleships
                         xCoordinate = int.Parse(Console.ReadLine()) - 1;
                         Console.WriteLine("Napište do jakého sloupce chcete pálit");
                         yCoordinate = columns.IndexOf(Console.ReadLine());
+
+
+                        if (shipTypesLetters.Contains(computerField[xCoordinate, yCoordinate]))
+                        {
+                            computerFieldVisual[xCoordinate, yCoordinate] = "X";
+                            fireAgain = true;
+                        }
+                        else
+                        {
+                            computerFieldVisual[xCoordinate, yCoordinate] = "V";
+                            fireAgain = false;
+                        }
                     }
                     catch (Exception)
                     {
@@ -219,43 +231,9 @@ namespace Battleships
                         errorRepeat = true;
                     }
                 } while (errorRepeat);
-                Console.WriteLine("T = trefa, V = vedle ");
-                if (shipTypesLetters.Contains(computerField[xCoordinate, yCoordinate]))
-                {
-                    computerFieldVisual[xCoordinate, yCoordinate] = "T";
-                    fireAgain = true;                    
-                }
-                else
-                {
-                    computerFieldVisual[xCoordinate, yCoordinate] = "V";
-                    fireAgain = false;
-                }
+                Console.WriteLine("X = trefa, V = vedle ");
                 Console.WriteLine("   Pole nepřítele");
                 PrintArray(computerFieldVisual);
-            } while (fireAgain);
-        }
-        static void ShootingComputer(string[,] playerField)
-        {
-            List<string> shipTypesLetters = new List<string> { "T", "P", "K", "B", "L" };
-            bool fireAgain;
-            Random rng = new Random();
-            do
-            {
-                int xCoordinate = rng.Next(0, playerField.GetLength(1));
-                int yCoordinate = rng.Next(0, playerField.GetLength(0));
-                Console.WriteLine("T = trefa, V = vedle ");
-                if (shipTypesLetters.Contains(playerField[xCoordinate, yCoordinate]))
-                {
-                    playerField[xCoordinate, yCoordinate] = "T";
-                    fireAgain = true;
-                }
-                else
-                {
-                    playerField[xCoordinate, yCoordinate] = "V";
-                    fireAgain = false;
-                }
-                Console.WriteLine("      Vaše pole");
-                PrintArray(playerField);
             } while (fireAgain);
         }
         static void Main(string[] args)
@@ -269,14 +247,14 @@ namespace Battleships
                 try
                 {
                     fieldMeasurementRepeat = false;
-                    Console.WriteLine("Zadejte horizontální délku pole (5-15)");
+                    Console.WriteLine("Zadejte horizontální délku pole (6-15)");
                     horizontalLength = int.Parse(Console.ReadLine());
-                    if ((horizontalLength < 5) || (horizontalLength > 15)) { Console.WriteLine("Zadejte validní hodnotu"); fieldMeasurementRepeat = true; }
+                    if ((horizontalLength < 6) || (horizontalLength > 15)) { Console.WriteLine("Zadejte validní hodnotu"); fieldMeasurementRepeat = true; }
                     else
                     {
-                        Console.WriteLine("Zadejte vertikální výšku pole (5-15)");
+                        Console.WriteLine("Zadejte vertikální výšku pole (6-15)");
                         verticalLength = int.Parse(Console.ReadLine());
-                        if ((verticalLength < 5) || (verticalLength > 15)) { Console.WriteLine("Zadejte validní hodnotu"); fieldMeasurementRepeat = true; }
+                        if ((verticalLength < 6) || (verticalLength > 15)) { Console.WriteLine("Zadejte validní hodnotu"); fieldMeasurementRepeat = true; }
                     }
                 } catch (Exception)
                 {
@@ -299,6 +277,17 @@ namespace Battleships
             bool sonar = true;
             int sonarXCoordinate, sonarYCoordinate;
             bool sonarRepeat;
+
+            bool fireAgain = false;
+            string hitSave = "unasigned";
+            bool hitSaveRemains;
+            int xCoordinate = 0, yCoordinate = 0;
+            int savedXCoordinate = 0, savedYCoordinate = 0;
+            Random rng = new Random();
+            int randomDirection = rng.Next(1, 5);
+            List<int> usedDirections = new List<int>(3);
+            usedDirections.Add(randomDirection);
+            bool errorRepeat;
 
             while (end == false)
             {    
@@ -330,6 +319,8 @@ namespace Battleships
                                 PrintArray(computerFieldVisual);
                                 sonar = false;
                             }
+                            else if (sonarAnswer == "ne") { }
+                            else sonarRepeat = true;
                         } catch (Exception) { Console.WriteLine("error"); sonarRepeat = true; }
                     } while (sonarRepeat);
                 }               
@@ -342,8 +333,92 @@ namespace Battleships
                 if ((end == true) && (playerWin = true)) Console.WriteLine("Vyhráli jste!");
                 else
                 {
-                    end = true;
-                    ShootingComputer(playerField);
+                    do //pro implementaci strategie palby pc jsem tento kód musel vyndat z funkce, aby si to mohle pamatovat předchozí údaje
+                    {
+                        do
+                        {
+                            try
+                            {
+                                hitSaveRemains = false;
+                                for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) if (playerField[i, j] == hitSave) hitSaveRemains = true;
+                                if (hitSaveRemains == false) usedDirections.Clear();
+                                if ((shipTypesLetters.Contains(hitSave)) && (hitSaveRemains = true))
+                                {
+                                    if (randomDirection == 1)
+                                    {
+                                        xCoordinate += 1;
+                                    }
+                                    else if (randomDirection == 2)
+                                    {
+                                        xCoordinate -= 1;
+                                    }
+                                    else if (randomDirection == 3)
+                                    {
+                                        yCoordinate += 1;
+                                    }
+                                    else if (randomDirection == 4)
+                                    {
+                                        yCoordinate -= 1;
+                                    }
+                                }
+                                else
+                                {
+                                    xCoordinate = rng.Next(0, playerField.GetLength(1));
+                                    yCoordinate = rng.Next(0, playerField.GetLength(0));
+                                }
+                                if (shipTypesLetters.Contains(playerField[xCoordinate, yCoordinate]))
+                                {
+                                    if (hitSaveRemains == false)
+                                    {
+                                        savedXCoordinate = xCoordinate;
+                                        savedYCoordinate = yCoordinate;
+                                        hitSave = playerField[xCoordinate, yCoordinate];
+                                    }
+                                    playerField[xCoordinate, yCoordinate] = "X";
+                                    fireAgain = true;
+                                    errorRepeat = false;
+                                }
+                                else if ((playerField[xCoordinate, yCoordinate] == "X") || (playerField[xCoordinate, yCoordinate] == "V"))
+                                {
+                                    if (hitSaveRemains)
+                                    {
+                                        xCoordinate = savedXCoordinate;
+                                        yCoordinate = savedYCoordinate;
+                                        while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
+                                        usedDirections.Add(randomDirection);
+                                        errorRepeat = true;
+                                    }
+                                    else
+                                    {
+                                        errorRepeat = true;
+                                    }
+                                }
+                                else
+                                {
+                                    while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
+                                    usedDirections.Add(randomDirection);
+                                    playerField[xCoordinate, yCoordinate] = "V";
+                                    xCoordinate = savedXCoordinate;
+                                    yCoordinate = savedYCoordinate;
+                                    fireAgain = false;
+                                    errorRepeat = false;
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
+                                usedDirections.Add(randomDirection);
+                                xCoordinate = savedXCoordinate;
+                                yCoordinate = savedYCoordinate;
+                                errorRepeat = true;
+                            }
+                        } while (errorRepeat);
+                        Console.WriteLine("X = trefa, V = vedle ");
+                        Console.WriteLine("      Vaše pole");
+                        PrintArray(playerField);
+                    } while (fireAgain);
+
+                    end = true;                    
                     foreach (string i in playerField) if (shipTypesLetters.Contains(i)) end = false;
                     if ((end == true)&&(playerWin == false)) Console.WriteLine("Konec hry");
                 }
