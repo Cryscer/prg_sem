@@ -201,6 +201,8 @@ namespace Battleships
             bool fireAgain = false;
             bool errorRepeat;
             int xCoordinate, yCoordinate;
+            Console.WriteLine("   Pole nepřítele");
+            PrintArray(computerFieldVisual);
             do
             {
                 do
