@@ -219,6 +219,7 @@ namespace Battleships
                         if (shipTypesLetters.Contains(computerField[xCoordinate, yCoordinate]))
                         {
                             computerFieldVisual[xCoordinate, yCoordinate] = "X";
+                            computerField[xCoordinate, yCoordinate] = "X";
                             fireAgain = true;
                         }
                         else
@@ -236,6 +237,7 @@ namespace Battleships
                 Console.WriteLine("X = trefa, V = vedle ");
                 Console.WriteLine("   Pole nepřítele");
                 PrintArray(computerFieldVisual);
+                foreach (string i in computerField) if (shipTypesLetters.Contains(i) == false) fireAgain = false;
             } while (fireAgain);
         }
         static void Main(string[] args)
@@ -328,13 +330,15 @@ namespace Battleships
                 ShootingPlayer(computerField, computerFieldVisual);
                 playerWin = true;
                 end = true;
-                foreach (string i in computerField) 
+                foreach (string i in computerField)
+                {
                     if (shipTypesLetters.Contains(i))
                     {
                         end = false;
                         playerWin = false;
                     }
-                if ((end == true) && (playerWin = true)) Console.WriteLine("Vyhráli jste!");
+                }
+                if (playerWin == true) Console.WriteLine("Vyhráli jste!");
                 else
                 {
                     do //pro implementaci strategie palby pc jsem tento kód musel vyndat z funkce, aby si to mohle pamatovat předchozí údaje
