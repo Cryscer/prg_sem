@@ -282,19 +282,18 @@ namespace Battleships
 
             bool fireAgain = false;
             string hitSave = "unasigned";
-            bool hitSaveRemains;
+            bool hitSaveRemains = false;
             int xCoordinate = 0, yCoordinate = 0;
             int savedXCoordinate = 0, savedYCoordinate = 0;
             Random rng = new Random();
             int randomDirection = rng.Next(1, 5);
-            List<int> usedDirections = new List<int>(3);
+            List<int> usedDirections = new List<int>(4);
             usedDirections.Add(randomDirection);
+            int directionAmount = 0;
             bool errorRepeat;
 
             while (end == false)
-            {    
-                playerWin = true;
-                end = true;               
+            {                   
                 if (sonar) //implementace sonaru
                 {
                     do
@@ -308,7 +307,7 @@ namespace Battleships
                             {
                                 Console.WriteLine("Vyberte řádek středu čtverce 3*3");
                                 sonarXCoordinate = int.Parse(Console.ReadLine()) - 1;
-                                Console.WriteLine("Vyberte sloupec střed čtverce 3*3");
+                                Console.WriteLine("Vyberte sloupec středu čtverce 3*3");
                                 sonarYCoordinate = columns.IndexOf(Console.ReadLine());
                                 for (int i = -1; i < 2; i++)
                                 {
@@ -326,8 +325,11 @@ namespace Battleships
                         } catch (Exception) { Console.WriteLine("error"); sonarRepeat = true; }
                     } while (sonarRepeat);
                 }               
-                ShootingPlayer(computerField, computerFieldVisual); 
-                foreach (string i in computerField) if (shipTypesLetters.Contains(i))
+                ShootingPlayer(computerField, computerFieldVisual);
+                playerWin = true;
+                end = true;
+                foreach (string i in computerField) 
+                    if (shipTypesLetters.Contains(i))
                     {
                         end = false;
                         playerWin = false;
@@ -343,7 +345,14 @@ namespace Battleships
                             {
                                 hitSaveRemains = false;
                                 for (int i = 0; i < playerField.GetLength(0); i++) for (int j = 0; j < playerField.GetLength(1); j++) if (playerField[i, j] == hitSave) hitSaveRemains = true;
-                                if (hitSaveRemains == false) usedDirections.Clear();
+                                directionAmount = 0;
+                                foreach (int i in usedDirections) directionAmount++;
+                                if (directionAmount == 4) hitSaveRemains = false;
+                                if (hitSaveRemains == false)
+                                {
+                                    usedDirections.Clear();
+                                    hitSave = "unasigned";
+                                }
                                 if ((shipTypesLetters.Contains(hitSave)) && (hitSaveRemains = true))
                                 {
                                     if (randomDirection == 1)
@@ -397,21 +406,32 @@ namespace Battleships
                                 }
                                 else
                                 {
-                                    while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
-                                    usedDirections.Add(randomDirection);
                                     playerField[xCoordinate, yCoordinate] = "V";
-                                    xCoordinate = savedXCoordinate;
-                                    yCoordinate = savedYCoordinate;
+                                    if (hitSaveRemains == true)
+                                    {
+                                        while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
+                                        usedDirections.Add(randomDirection);                                     
+                                        xCoordinate = savedXCoordinate;
+                                        yCoordinate = savedYCoordinate;
+                                    }                                    
                                     fireAgain = false;
                                     errorRepeat = false;
                                 }
                             }
                             catch (Exception)
                             {
-                                while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
-                                usedDirections.Add(randomDirection);
-                                xCoordinate = savedXCoordinate;
-                                yCoordinate = savedYCoordinate;
+                                if (hitSaveRemains == true)
+                                {
+                                    directionAmount = 0;
+                                    foreach (int i in usedDirections) directionAmount++;
+                                    if (directionAmount != 4)
+                                    {
+                                        while (usedDirections.Contains(randomDirection)) randomDirection = rng.Next(1, 5);
+                                        usedDirections.Add(randomDirection);
+                                        xCoordinate = savedXCoordinate;
+                                        yCoordinate = savedYCoordinate;
+                                    }
+                                }
                                 errorRepeat = true;
                             }
                         } while (errorRepeat);
@@ -419,7 +439,6 @@ namespace Battleships
                         Console.WriteLine("      Vaše pole");
                         PrintArray(playerField);
                     } while (fireAgain);
-
                     end = true;                    
                     foreach (string i in playerField) if (shipTypesLetters.Contains(i)) end = false;
                     if ((end == true)&&(playerWin == false)) Console.WriteLine("Konec hry");
