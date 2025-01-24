@@ -13,19 +13,21 @@ namespace ClassPlayground
         string holderName;
         string currency;
         int balance;
+        Random rnd = new Random();
 
-        public BankAccount(int accountNumber, string holderName, string currency, int balance)
+        public BankAccount(string holderName, string currency)
         {
-            this.accountNumber = accountNumber;
             this.holderName = holderName;
             this.currency = currency;
-            this.balance = balance;
+            accountNumber = rnd.Next(100000000, 1000000000);
+            balance = 0;
         }
 
         public void Deposit(int amount)
         {
             if (amount < 0) amount = 0;
             balance += amount;
+            Console.WriteLine("Successfully deposited " + amount + " " + currency);
         }
 
         public int Withdraw(int amount)
@@ -37,6 +39,7 @@ namespace ClassPlayground
                 Console.WriteLine("Not enough money in account!");
             }
             balance -= amount;
+            Console.WriteLine("Successfully withdrawn " + amount + " " + currency);
             return amount;
         }
         static void Transfer(BankAccount accountFrom, BankAccount accountTo, int amount) 
@@ -50,10 +53,10 @@ namespace ClassPlayground
             {
                 amount = 0;
                 Console.WriteLine("Not enough money in account!");
-            }
-            else Console.WriteLine("Successfully transfered");
+            }           
+            else Console.WriteLine("Successfully transfered " + amount + " " + accountTo.currency + " to " + accountTo.holderName);
             accountFrom.balance -= amount;
-            accountTo.balance += amount;           
+            accountTo.balance += amount;                    
         }
     }
 }

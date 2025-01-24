@@ -68,10 +68,25 @@ namespace ClassPlayground
     {
         static void Main(string[] args)
         {
-            Rectangle rectangle = new Rectangle(8, 5);
-            rectangle.CalculateArea();
-            rectangle.CalculateAspectRatio();
-            rectangle.ContainsPoint(9, 5);
+            /*Rectangle rectangle1 = new Rectangle(8, 5);
+            rectangle1.CalculateArea();
+            rectangle1.CalculateAspectRatio();
+            rectangle1.ContainsPoint(9, 5);
+
+            Shapes2D rectangle2 = new Rectangle(8, 5);
+            rectangle2.CalculateArea();
+            rectangle2.CalculateAspectRatio();
+            rectangle2.ContainsPoint(9, 5);
+
+            Circle circle1 = new Circle(5);
+            circle1.CalculateArea();
+            circle1.CalculateAspectRatio();
+            circle1.ContainsPoint(5, 5);*/
+
+            BankAccount account1 = new BankAccount("Lojza Máslo", "CZK");
+            account1.Deposit(1000);
+            BankAccount account2 = new BankAccount("Lojza Báslo", "CZK");
+
             Console.ReadKey();
         }
     }

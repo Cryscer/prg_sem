@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassPlayground
 {
-    internal class Rectangle
+    internal class Rectangle : Shapes2D
     {
         public float width, height;
 
@@ -18,14 +18,14 @@ namespace ClassPlayground
             this.width = width;
         }
 
-        public void CalculateArea()
+        public override void CalculateArea()
         {
             float value = width * height;
             Console.Write("the total area is " + value);
             
         }
 
-        public void CalculateAspectRatio()
+        public override void CalculateAspectRatio()
         {
             float aspectRatio = (width / height);
             if (aspectRatio > 1) Console.WriteLine(" wide");
@@ -33,9 +33,9 @@ namespace ClassPlayground
             else Console.WriteLine(" and it is a square");           
         }
 
-        public void ContainsPoint(float x, float y)
+        public override void ContainsPoint(float x, float y)
         {
-            if (x < width || y < height) Console.WriteLine("yes, this point is located inside the rectangle");
+            if (x <= width || y <= height) Console.WriteLine("yes, this point is located inside the rectangle");
             else Console.WriteLine("no, this point isn't located inside the rectangle");
         } 
     }
