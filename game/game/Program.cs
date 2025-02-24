@@ -22,8 +22,21 @@ namespace game
             int attackBonus = strength + dexterity;
             int damageBonus = strength;
             int evasiveness = 10 + dexterity;
-            int hp = 10 + vitality;
+            int hp = 5 * vitality;
 
+            Character player = new Character();
+            /*Character enemy = new Character();
+
+            while ((player.hp > 0) && (enemy.hp > 0)) 
+            {
+                player.Attack(enemy);
+                enemy.Attack(player);
+            }*/
+            
+
+            Slime slime1 = new Slime();
+            slime1.Attack(player);
+            Console.ReadLine();
         }
     }
 }

@@ -8,10 +8,16 @@ namespace game
 {
     internal class Character
     {
-        int vitality, strength, endurance, dexterity, attackBonus, damageBonus, evasion, hp, damageDice;
+        public int vitality, strength, endurance, dexterity, attackBonus, damageBonus, evasion, hp, damageDice;
+        string name = " character";
 
-        public Character(int vitality, int strength, int endurance, int dexterity)
+        public Character()
         {
+            name = "character";
+            strength = 1;
+            endurance = 1;
+            dexterity = 1;
+            attackBonus = 1;
             attackBonus = strength + dexterity;
             damageBonus = strength;
             evasion = 10 + dexterity;
@@ -19,16 +25,18 @@ namespace game
             damageDice = 6;
         }
 
-        static void Attack(Character attacker, Character defender)
+        public void Attack(Character defender)
         {
             Random rng = new Random();
-            int chance = rng.Next(1, 21) + attacker.attackBonus;
+            Console.WriteLine( name + " attacked " + defender.name);
+            int chance = rng.Next(1, 21) + attackBonus;
             if (chance < defender.evasion) Console.WriteLine("Miss");
             else
             {
-                int damage = rng.Next(1, attacker.damageDice + 1) + attacker.damageBonus;
+                int damage = rng.Next(1, damageDice + 1) + damageBonus;
                 defender.hp -= damage;
                 Console.WriteLine("Attack dealt " + damage + " damage");
+                Console.WriteLine(defender.hp);
             }
 
         }
