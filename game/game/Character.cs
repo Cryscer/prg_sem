@@ -8,16 +8,11 @@ namespace game
 {
     internal class Character
     {
-        public int vitality, strength, endurance, dexterity, attackBonus, damageBonus, evasion, hp, damageDice;
-        string name = " character";
+        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice;
+        public string name = " character";
 
         public Character()
-        {
-            name = "character";
-            strength = 1;
-            endurance = 1;
-            dexterity = 1;
-            attackBonus = 1;
+        {           
             attackBonus = strength + dexterity;
             damageBonus = strength;
             evasion = 10 + dexterity;
@@ -36,9 +31,16 @@ namespace game
                 int damage = rng.Next(1, damageDice + 1) + damageBonus;
                 defender.hp -= damage;
                 Console.WriteLine("Attack dealt " + damage + " damage");
-                Console.WriteLine(defender.hp);
+                Console.WriteLine(defender.name + " has " + defender.hp + " hp left");
             }
-
+        }
+        public void RenewStats()
+        {
+            attackBonus = strength + dexterity;
+            damageBonus = strength;
+            evasion = 10 + dexterity;
+            hp = 5 * vitality;
+            damageDice = 6;
         }
 
     }

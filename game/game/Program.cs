@@ -12,19 +12,14 @@ namespace game
       
         static void Main(string[] args)
         {                       
-            Console.WriteLine("this is the player ");
-            
-            int vitality = 1;
-            int endurance = 1;
-            int strength = 1;
-            int dexterity = 1;
-            
-            int attackBonus = strength + dexterity;
-            int damageBonus = strength;
-            int evasiveness = 10 + dexterity;
-            int hp = 5 * vitality;
-
             Character player = new Character();
+            player.name = "player";
+            player.vitality = 2;
+            player.endurance = 2;
+            player.strength = 2;
+            player.dexterity = 2;
+            player.RenewStats();
+            
             /*Character enemy = new Character();
 
             while ((player.hp > 0) && (enemy.hp > 0)) 
@@ -35,7 +30,11 @@ namespace game
             
 
             Slime slime1 = new Slime();
-            slime1.Attack(player);
+            while ((player.hp > 0) && (slime1.hp > 0))
+            {
+                slime1.Attack(player);
+                player.Attack(slime1);
+            }
             Console.ReadLine();
         }
     }
