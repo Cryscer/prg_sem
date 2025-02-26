@@ -9,7 +9,7 @@ namespace game
     internal class Character
     {
         public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice;
-        public string name = " character";
+        public string name = " character";        
 
         public Character()
         {           
@@ -32,6 +32,7 @@ namespace game
                 defender.hp -= damage;
                 Console.WriteLine("Attack dealt " + damage + " damage");
                 Console.WriteLine(defender.name + " has " + defender.hp + " hp left");
+                if (defender.hp <= 0) Console.WriteLine(defender.name + " died");
             }
         }
         public void RenewStats()
