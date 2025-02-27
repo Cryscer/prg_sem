@@ -9,7 +9,8 @@ namespace game
 {
     internal class Slime : Character
     {
-        public Slime(string name) 
+        
+        public Slime(string name) : base ( name, 1, 1, 1, 3)
         {
             base.name = this.name;
             base.strength = 1;

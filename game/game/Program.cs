@@ -12,13 +12,7 @@ namespace game
       
         static void Main(string[] args)
         {                       
-            Character player = new Character();
-            player.name = "player";
-            player.vitality = 2;
-            player.endurance = 2;
-            player.strength = 2;
-            player.dexterity = 2;
-            player.RenewStats();
+            Character player = new Character("player", 2, 2, 2, 6);            
 
             /*Character enemy = new Character();
 
@@ -28,7 +22,11 @@ namespace game
                 enemy.Attack(player);
             }*/
 
-            List<Room> dungeon = new List<Room>(10);           
+            List<Room> dungeon = new List<Room>(10);
+            Room room1 = new Room();
+            room1.isPlayerInside = true;
+            room1.GenerateRoom(player);
+
             Console.ReadLine();
         }
         public static void InitiateCombat2(Character enemy, Character player)
