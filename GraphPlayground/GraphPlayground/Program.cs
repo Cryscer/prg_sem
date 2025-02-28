@@ -12,9 +12,26 @@ namespace GraphPlayground
     {
         public static void DFS(Graph graph, Node startNode, Node targetNode = null)
         {
-            /*
-             * Zde naprogramuj prohledavani do hloubky.
-             */
+            Node currentNode = startNode;
+            List<Node> visited = new List<Node>();
+            while (visited.Count < graph.nodes.Count) { }
+            /*while (startNode.neighbors.Find(node => !node.visited) != default(Node)) ;*/
+            
+            /*bool shouldContinue = true;
+            while (shouldContinue)
+            {
+
+
+                shouldContinue = false;
+                foreach (Node neighbor in startNode.neighbors)
+                {
+                    if (!neighbor.visited)
+                    {
+                        shouldContinue = true;
+                        break;
+                    }
+                }
+            }*/
         }
 
         public static void BFS(Graph graph, Node startNode, Node targetNode = null)
@@ -39,10 +56,7 @@ namespace GraphPlayground
                     else Console.WriteLine(" Node: " + neighbor.index + " already visited or is in queue");
                 }                
             }
-            Console.WriteLine(" Final node: " + currentNode.index);
-            /*
-             * Zde naprogramuj prohledavani do sirky.
-             */
+            Console.WriteLine(" Final node: " + currentNode.index);           
         }
 
         static void Main(string[] args)
