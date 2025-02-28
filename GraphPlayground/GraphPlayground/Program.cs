@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 /*
  * Made by Jan Borecky for PRG seminar at Gymnazium Voderadska, year 2024-2025.
@@ -18,6 +19,27 @@ namespace GraphPlayground
 
         public static void BFS(Graph graph, Node startNode, Node targetNode = null)
         {
+            Console.WriteLine("Starting node:" + startNode.index);
+            Node currentNode = null ;
+            List<Node> queue = new List<Node>() { startNode } ;    
+            startNode.visited = true ;
+            while (queue.Count > 0)
+            {
+                currentNode = queue[0];                
+                Console.WriteLine("Current node:" + currentNode.index);
+                queue.RemoveAt(0);
+                foreach (Node neighbor in currentNode.neighbors)
+                {
+                    if (!neighbor.visited)
+                    {
+                        queue.Add(neighbor);
+                        neighbor.visited = true;
+                        Console.WriteLine(" Adding node: " + neighbor.index + " to queue");
+                    }
+                    else Console.WriteLine(" Node: " + neighbor.index + " already visited or is in queue");
+                }                
+            }
+            Console.WriteLine(" Final node: " + currentNode.index);
             /*
              * Zde naprogramuj prohledavani do sirky.
              */
