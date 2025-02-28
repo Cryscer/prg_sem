@@ -13,10 +13,7 @@ namespace game
         public Slime(string name) : base ( name, 1, 1, 1, 3)
         {
             base.name = this.name;
-            base.strength = 1;
-            base.endurance = 1;
-            base.dexterity = 1;
-            base.attackBonus = 1;            
+            base.xp = 2;         
         }
 
     }

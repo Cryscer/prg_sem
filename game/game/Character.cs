@@ -8,9 +8,9 @@ namespace game
 {
     internal class Character
     {
-        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice;
+        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold;
         public string name;
-        bool isAlive = true;
+        bool isAlive = true;        
 
         public Character(string name ,int strength, int dexterity, int vitality, int damageDice)
         {           
@@ -20,6 +20,9 @@ namespace game
             hp = 5 * vitality;
             this.damageDice = damageDice;
             this.name = name;
+            weightLoad = 3 * endurance;
+            level = 1;
+            gold = 1;
         }
 
         public void Attack(Character defender)
@@ -27,7 +30,7 @@ namespace game
             if (isAlive == true) { 
             Random rng = new Random();
             Console.WriteLine( name + " attacked " + defender.name);
-            int chance = rng.Next(1, 21) + attackBonus;
+            int chance = rng.Next(1, 21) + attackBonus;               
                 if (chance < defender.evasion) Console.WriteLine("Miss");
                 else
                 {
@@ -48,10 +51,12 @@ namespace game
         {
             attackBonus = strength + dexterity;
             damageBonus = strength;
-            evasion = 10 + dexterity;
-            hp = 5 * vitality;
+            evasion = 10 + dexterity;            
             damageDice = 6;
         }
-
+        public void RenewHP()
+        {
+            hp = vitality * 5;
+        }
     }
 }
