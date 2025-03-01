@@ -10,7 +10,7 @@ namespace game
     {
         public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold;
         public string name;
-        bool isAlive = true;        
+        public bool isAlive = true, isInTown = false;        
 
         public Character(string name ,int strength, int dexterity, int vitality, int damageDice)
         {           

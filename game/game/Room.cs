@@ -37,13 +37,13 @@ namespace game
                 switch (amountOfEnemies) 
                 {
                     case 1:
-                        Program.InitiateCombat2(slime1, player);
+                        Program.InitiateCombat2(slime1, player, player.isInTown);
                         break;
                     case 2:
-                        Program.InitiateCombat3(slime1, slime2, player);
+                        Program.InitiateCombat3(slime1, slime2, player, player.isInTown);
                         break ;                    
                 }
             }                     
-        } 
+        }
     }
 }
