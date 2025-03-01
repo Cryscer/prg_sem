@@ -8,7 +8,7 @@ namespace game
 {
     internal class Character
     {
-        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold;
+        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap;
         public string name;
         public bool isAlive = true, isInTown = false;        
 
@@ -23,6 +23,7 @@ namespace game
             weightLoad = 3 * endurance;
             level = 1;
             gold = 1;
+            xpCap = level * 3;
         }
 
         public void Attack(Character defender)
@@ -53,6 +54,7 @@ namespace game
             damageBonus = strength;
             evasion = 10 + dexterity;            
             damageDice = 6;
+            xpCap = level * 3;
         }
         public void RenewHP()
         {
