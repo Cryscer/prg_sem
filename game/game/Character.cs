@@ -24,9 +24,9 @@ namespace game
             this.dexterity = dexterity;
             this.vitality = vitality;
             this.damageDiceAmount = damageDiceAmount;
-            attackBonus = strength + dexterity;
+            attackBonus = this.strength + this.dexterity;
             this.weaponBonus = weaponBonus;
-            damageBonus = strength + this.weaponBonus;
+            damageBonus = this.strength + this.weaponBonus;
             evasion = 5 + dexterity + armorBonus;
             hp = 5 * vitality;
             this.damageDice = damageDice;
@@ -70,7 +70,8 @@ namespace game
             damageBonus = strength + weaponBonus;
             evasion = 10 + dexterity + armorBonus;            
             xpCap = level * 3;
-            
+            weightCap = 3 * endurance;
+
         }
         public void RenewHP()
         {
