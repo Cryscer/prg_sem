@@ -31,7 +31,7 @@ namespace game
                 case 4:
                     player.elixirHealAmount++; 
                 break;
-            }                
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace game
         public string name;
         public bool isAlive = true, isInTown = true;
         public Armor currentArmor = new Armor(0,0,0);   
-        public int minorHealAmount = 3;
+        public int minorHealAmount = 0;
         public int mediumHealAmount = 0;
         public int strongHealAmount = 0;
         public int elixirHealAmount = 0;
@@ -39,18 +39,16 @@ namespace game
             xpCap = level * 3;
         }
 
-        public void Attack(Character defender)
+        public void Attack(Character defender, int d20, int dDamage)
         {
             if (isAlive) { 
                 Random rng = new Random();
                 Console.WriteLine( name + " attacked " + defender.name);
-                int d20 = rng.Next(1, 21);
                 int chance = d20 + attackBonus;
-                Console.WriteLine(d20 + " + " + attackBonus);
+                Console.WriteLine(d20 + " + " + attackBonus + " against " + defender.name + "'s " + defender.evasion + " evasion.");
                 if (chance < defender.evasion) Console.WriteLine("Miss");
                 else
                 {
-                    int dDamage = rng.Next(1, damageDice + 1);
                     int damage = dDamage * damageDiceAmount + damageBonus;
                     Console.WriteLine(damageDiceAmount + " * " + dDamage + " + " + damageBonus);
                     defender.hp -= damage;
@@ -78,7 +76,7 @@ namespace game
         {
             hp = vitality * 5;
         }
-        public void DrinkHeal(int potionType, bool used)
+        public bool DrinkHeal(int potionType, bool used)
         {
             used = false;
             switch (potionType)
@@ -86,7 +84,8 @@ namespace game
                 case 1:
                     if (minorHealAmount > 0)
                     {
-                        hp += 5;
+                        if ((hp + 5) <= (5 * vitality)) hp += 5;
+                        else RenewHP();
                         minorHealAmount--;
                         used = true;
                     }
@@ -95,7 +94,8 @@ namespace game
                 case 2:
                     if (mediumHealAmount > 0)
                     {
-                        hp += 10;
+                        if ((hp + 10) <= (5 * vitality)) hp += 10;
+                        else RenewHP();
                         mediumHealAmount--;
                         used = true;
                     }
@@ -104,7 +104,8 @@ namespace game
                 case 3:
                     if (strongHealAmount > 0)
                     {
-                        hp += 15;
+                        if ((hp + 15) <= (5 * vitality)) hp += 15;
+                        else RenewHP();
                         strongHealAmount--;
                         used = true;
                     }
@@ -123,6 +124,7 @@ namespace game
                     Console.WriteLine("Invalid answer!");
                     break;
             }
+            return used;
         }
     }
 }

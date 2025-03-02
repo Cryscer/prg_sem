@@ -9,16 +9,14 @@ namespace game
 {
     internal class Room
     {
-
+        Random rng = new Random();
         int amountOfEnemies;
         int roomType;
-        bool unexplored;
         public bool isPlayerInside;
         
-        public Room()
+        public Room(int roomType)
         {
-            Random rng = new Random();
-            roomType = rng.Next(1, 11);
+            this.roomType = roomType; 
             amountOfEnemies = rng.Next(1, 3);          
         }
         
@@ -28,8 +26,8 @@ namespace game
             Character currentEnemy2 = new Slime("slime2");
             if ((3 <= player.level) && (player.level < 6))
             {
-                currentEnemy1 = new Character("goblin1", 2, 5, 3, 6, 4, 3, 0, 1);
-                currentEnemy2 = new Slime("slime1");
+                currentEnemy1 = new Character("goblin", 2, 5, 3, 6, 4, 3, 0, 1);
+                currentEnemy2 = new Slime("slime");
             }
             else if ((6 <= player.level) && (player.level < 9))
             {
@@ -38,8 +36,8 @@ namespace game
             }
             else if ((9 <= player.level) && (player.level < 12))
             {
-                currentEnemy1 = new Character("skeleton1", 5, 5, 5, 4, 7, 4, 1, 2);
-                currentEnemy2 = new Character("goblin1", 2, 5, 3, 6, 4, 3, 0, 1);
+                currentEnemy1 = new Character("skeleton", 5, 5, 5, 4, 7, 4, 1, 2);
+                currentEnemy2 = new Character("goblin", 2, 5, 3, 6, 4, 3, 0, 1);
             }
             else if ((12 <= player.level) && (player.level < 15))
             {
@@ -48,8 +46,8 @@ namespace game
             }
             else if ((15 <= player.level) && (player.level < 18))
             {
-                currentEnemy1 = new Character("orc1", 7, 4, 7, 6, 10, 7, 2, 2);
-                currentEnemy2 = new Character("skeleton1", 5, 5, 5, 4, 7, 4, 1, 2);
+                currentEnemy1 = new Character("orc", 7, 4, 7, 6, 10, 7, 2, 2);
+                currentEnemy2 = new Character("skeleton", 5, 5, 5, 4, 7, 4, 1, 2);
             }
             else if ((18 <= player.level) && (player.level < 21))
             {
@@ -58,8 +56,8 @@ namespace game
             }
             else if ((21 <= player.level) && (player.level < 24))
             {
-                currentEnemy1 = new Character("troll1", 10, 7, 10, 10, 20, 12, 3, 3);
-                currentEnemy2 = new Character("orc1", 7, 4, 7, 6, 10, 7, 2, 2);
+                currentEnemy1 = new Character("troll", 10, 7, 10, 10, 20, 12, 3, 3);
+                currentEnemy2 = new Character("orc", 7, 4, 7, 6, 10, 7, 2, 2);
             }
             else if (24 <= player.level)
             {
@@ -73,7 +71,7 @@ namespace game
                 {
                     case 1:
                         Console.WriteLine("You find a room with an enemy in it. Naturally, you start fighting.");
-                        Console.WriteLine(currentEnemy1.name);
+                        Console.WriteLine(currentEnemy1.name + " blocks the way!");
                         Program.InitiateCombat2(currentEnemy1, player);
                         break;
                     case 2:
