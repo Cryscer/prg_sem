@@ -8,7 +8,7 @@ namespace game
 {
     internal class Weapon : Item
     {
-        int damageDice, damageBonus, damageDieAmount;
+        public int damageDice, damageBonus, damageDieAmount;
 
         public Weapon(int damageDice, int damageBonus, int damageDieAmount, int price, int weight) : base(price, weight)
         {
