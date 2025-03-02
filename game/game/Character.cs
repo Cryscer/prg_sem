@@ -9,7 +9,7 @@ namespace game
 {
     internal class Character
     {
-        public int vitality, strength, endurance = 2, dexterity, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0, weaponBonus = 0, damageDiceAmount = 1;
+        public int vitality, strength, endurance = 2, dexterity, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0, weaponBonus, damageDiceAmount;
         public string name;
         public bool isAlive = true, isInTown = true;
         public Armor currentArmor = new Armor(0,0,0);   
@@ -18,13 +18,15 @@ namespace game
         public int strongHealAmount = 0;
         public int elixirHealAmount = 0;
 
-        public Character(string name ,int strength, int dexterity, int vitality, int damageDice)
+        public Character(string name, int strength, int dexterity, int vitality, int damageDice, int xp, int gold, int weaponBonus, int damageDiceAmount)
         {
             this.strength = strength;
             this.dexterity = dexterity;
             this.vitality = vitality;
+            this.damageDiceAmount = damageDiceAmount;
             attackBonus = strength + dexterity;
-            damageBonus = strength + weaponBonus;
+            this.weaponBonus = weaponBonus;
+            damageBonus = strength + this.weaponBonus;
             evasion = 5 + dexterity + armorBonus;
             hp = 5 * vitality;
             this.damageDice = damageDice;
@@ -32,7 +34,8 @@ namespace game
             weightCap = 3 * endurance;
             weightLoad = 0;
             level = 1;
-            gold = 1;
+            this.gold = gold;
+            this.xp = xp;
             xpCap = level * 3;
         }
 

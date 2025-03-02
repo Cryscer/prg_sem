@@ -24,23 +24,61 @@ namespace game
         
         public void GenerateRoom(Character player)
         {
-            /*Random rng = new Random();
-            int enemySelection = rng.Next(1,4);
-            if (enemySelection == 1) {*/
-            Slime slime1 = new Slime("slime1");
-            Slime slime2 = new Slime("slime2");
-            Character currentEnemy1 = slime1;
-            Character currentEnemy2 = slime2;
+            Character currentEnemy1 = new Slime("slime1");
+            Character currentEnemy2 = new Slime("slime2");
+            if ((3 <= player.level) && (player.level < 6))
+            {
+                currentEnemy1 = new Character("goblin1", 2, 5, 3, 6, 4, 3, 0, 1);
+                currentEnemy2 = new Slime("slime1");
+            }
+            else if ((6 <= player.level) && (player.level < 9))
+            {
+                currentEnemy1 = new Character("goblin1", 2, 5, 3, 6, 4, 3, 0, 1);
+                currentEnemy2 = new Character("goblin2", 2, 5, 3, 6, 4, 3, 0, 1);
+            }
+            else if ((9 <= player.level) && (player.level < 12))
+            {
+                currentEnemy1 = new Character("skeleton1", 5, 5, 5, 4, 7, 4, 1, 2);
+                currentEnemy2 = new Character("goblin1", 2, 5, 3, 6, 4, 3, 0, 1);
+            }
+            else if ((12 <= player.level) && (player.level < 15))
+            {
+                currentEnemy1 = new Character("skeleton1", 5, 5, 5, 4, 7, 4, 1, 2);
+                currentEnemy2 = new Character("skeleton2", 5, 5, 5, 4, 7, 4, 1, 2);
+            }
+            else if ((15 <= player.level) && (player.level < 18))
+            {
+                currentEnemy1 = new Character("orc1", 7, 4, 7, 6, 10, 7, 2, 2);
+                currentEnemy2 = new Character("skeleton1", 5, 5, 5, 4, 7, 4, 1, 2);
+            }
+            else if ((18 <= player.level) && (player.level < 21))
+            {
+                currentEnemy1 = new Character("orc1", 7, 4, 7, 6, 10, 7, 2, 2);
+                currentEnemy2 = new Character("orc2", 7, 4, 7, 6, 10, 7, 2, 2);
+            }
+            else if ((21 <= player.level) && (player.level < 24))
+            {
+                currentEnemy1 = new Character("troll1", 10, 7, 10, 10, 20, 12, 3, 3);
+                currentEnemy2 = new Character("orc1", 7, 4, 7, 6, 10, 7, 2, 2);
+            }
+            else if (24 <= player.level)
+            {
+                currentEnemy1 = new Character("troll1", 10, 7, 10, 10, 20, 12, 3, 3);
+                currentEnemy2 = new Character("troll2", 10, 7, 10, 10, 20, 12, 3, 3);
+            }
+
             if (roomType > 2)
             {
                 switch (amountOfEnemies)
                 {
                     case 1:
                         Console.WriteLine("You find a room with an enemy in it. Naturally, you start fighting.");
+                        Console.WriteLine(currentEnemy1.name);
                         Program.InitiateCombat2(currentEnemy1, player);
                         break;
                     case 2:
                         Console.WriteLine("You find a room with 2 enemies in it. Naturally, you start fighting.");
+                        Console.WriteLine(currentEnemy1.name + " and " + currentEnemy2.name + " block the way!");
                         Program.InitiateCombat3(currentEnemy1, currentEnemy2, player);
                         break;
                 }

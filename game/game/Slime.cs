@@ -10,7 +10,7 @@ namespace game
     internal class Slime : Character
     {
         
-        public Slime(string name) : base ( name, 1, 1, 1, 3)
+        public Slime(string name) : base ( name, 1, 1, 1, 3, 2, 1, 0, 1)
         {
             base.name = this.name;
             base.xp = 2;         

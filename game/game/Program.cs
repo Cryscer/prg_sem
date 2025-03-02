@@ -10,7 +10,7 @@ namespace game
     {
         static void Main(string[] args)
         {
-            Character player = new Character("player", 2, 2, 2, 3);                        
+            Character player = new Character("player", 2, 2, 2, 3, 0, 0, 0, 1);                        
             Travel(player);
             Console.ReadLine();
         }
@@ -143,8 +143,8 @@ namespace game
                     switch (answerA)
                     {
                         case "1":
-                            Console.WriteLine("Whci enemy would you like to attack," + enemy1.name + "[1] or " + enemy2.name + "[2]?" +
-                                "Exit[3]");
+                            Console.WriteLine("Whci enemy would you like to attack, " + enemy1.name + "[1] or " + enemy2.name + "[2]?" +
+                                "\nExit[3]");
                             loop3 = true;
                             do 
                             {
