@@ -11,25 +11,29 @@ namespace game
         static void Main(string[] args)
         {
             Character player = new Character("player", 2, 2, 2, 3);                        
-            Travel(player.isInTown, player);
+            Travel(player);
             Console.ReadLine();
         }
-        public static void InitiateCombat2(Character enemy, Character player, bool isInTown)
+        public static void InitiateCombat2(Character enemy, Character player)
         {
             bool loop1;
             bool loop2;
             bool itemUsed;
+            bool attacked;
             while ((player.hp > 0) && (enemy.hp > 0) && (!player.isInTown))
             {
                 itemUsed = false;
                 Console.WriteLine("Would you like to attack[1], use a healing potion[2], check your character info[3] or flee[4]?");
                 do
                 {
+                    attacked = false;
                     loop1 = true;
-                    switch (Console.ReadLine()) 
+                    string answerA = Console.ReadLine();
+                    switch (answerA) 
                     {
                         case "1":
                             player.Attack(enemy);
+                            attacked = true;
                             loop1 = false;
                             break;
                         case "2":
@@ -45,7 +49,8 @@ namespace game
                                 do
                                 {
                                     loop2 = true;
-                                    switch (Console.ReadLine())
+                                    string answerB = Console.ReadLine();
+                                    switch (answerB)
                                     {
                                         case "1":
                                             player.hp += 5;
@@ -89,7 +94,7 @@ namespace game
                             Console.WriteLine("Are you sure you want to flee back to the town?y/n");
                             if (Console.ReadLine() == "y")
                             {
-                                Travel(player.isInTown, player);
+                                Travel(player);
                                 loop1 = false;
                             }
                             else if (Console.ReadLine() == "n") loop1 = true;
@@ -104,27 +109,28 @@ namespace game
                             loop1 = true;
                             break;
                     }
-                    if ((itemUsed) && (!player.isInTown)) Console.WriteLine("What would you like to do now? Attack[1], check character info[3] or flee[4]?");
-                    else if (!player.isInTown) Console.WriteLine("What would you like to do now? Attack[1], use a healing potion[2], check character info[3] or flee[4]?");
+                    if (itemUsed && (player.hp > 0) && (enemy.hp > 0) && (!player.isInTown) && (!attacked)) Console.WriteLine("What would you like to do now? Attack[1], check character info[3] or flee[4]?");
+                    else if ((player.hp > 0) && (enemy.hp > 0) && (!player.isInTown) && (!attacked)) Console.WriteLine("What would you like to do now? Attack[1], use a healing potion[2], check character info[3] or flee[4]?");
                 } while (loop1);
                 if (!player.isInTown) enemy.Attack(player);
             }
-            if ((player.hp > 0) && (!player.isInTown)) PlayerDeath(player, isInTown);
+            if ((player.hp <= 0) && (!player.isInTown)) PlayerDeath(player);
             else if (!player.isInTown)
             {
                 player.xp += enemy.xp;
                 player.gold += enemy.gold;
                 Console.WriteLine("+ " + enemy.xp + " xp" +
-                    "+ " + enemy.gold + " gold");
+                    "\n+ " + enemy.gold + " gold");
             }
 
         }
-        public static void InitiateCombat3(Character enemy1, Character enemy2, Character player, bool isInTown)
+        public static void InitiateCombat3(Character enemy1, Character enemy2, Character player)
         {
             bool loop1;
             bool loop2;
             bool loop3;
             bool itemUsed;
+            bool attacked;
             while ((player.hp > 0) && ((enemy1.hp > 0) || (enemy2.hp > 0)))
             {
                 itemUsed = false;
@@ -132,7 +138,9 @@ namespace game
                 do
                 {
                     loop1 = true;
-                    switch (Console.ReadLine())
+                    attacked = false;
+                    string answerA = Console.ReadLine();
+                    switch (answerA)
                     {
                         case "1":
                             Console.WriteLine("Whci enemy would you like to attack," + enemy1.name + "[1] or " + enemy2.name + "[2]?" +
@@ -146,11 +154,13 @@ namespace game
                                         player.Attack(enemy1);
                                         loop3 = false;
                                         loop1 = false;
+                                        attacked = true;
                                         break;
                                     case "2":
                                         player.Attack(enemy2);
                                         loop3 = false;
                                         loop1 = false;
+                                        attacked = true;
                                         break;
                                     case "3":
                                         loop3 = false;
@@ -174,7 +184,8 @@ namespace game
                                 do
                                 {
                                     loop2 = true;
-                                    switch (Console.ReadLine())
+                                    string answerB = Console.ReadLine();
+                                    switch (answerB)
                                     {
                                         case "1":
                                             player.DrinkHeal(1, itemUsed);
@@ -210,7 +221,7 @@ namespace game
                             Console.WriteLine("Are you sure you want to flee back to the town?y/n");
                             if (Console.ReadLine() == "y")
                             {
-                                Travel(player.isInTown, player);
+                                Travel(player);
                                 loop1 = false;
                             }
                             else if (Console.ReadLine() == "n") loop1 = true;
@@ -225,8 +236,8 @@ namespace game
                             loop1 = true;
                             break;
                     }
-                    if ((itemUsed) && (!player.isInTown)) Console.WriteLine("What would you like to do now? Attack[1], check character info[3] or flee[4]?");
-                    else if (!player.isInTown) Console.WriteLine("What would you like to do now? Attack[1], use a healing potion[2], check character info[3] or flee[4]?");
+                    if ((itemUsed) && ((player.hp > 0) && ((enemy1.hp > 0) || (enemy2.hp > 0))) && (!attacked)) Console.WriteLine("What would you like to do now? Attack[1], check character info[3] or flee[4]?");
+                    else if ((player.hp > 0) && ((enemy1.hp > 0) || (enemy2.hp > 0)) && (!attacked)) Console.WriteLine("What would you like to do now? Attack[1], use a healing potion[2], check character info[3] or flee[4]?");                   
                 } while (loop1);
                 if (!player.isInTown)
                 {
@@ -234,35 +245,36 @@ namespace game
                     enemy2.Attack(player);
                 }
             }
-            if ((player.hp > 0) && (!player.isInTown)) PlayerDeath(player, isInTown);
+            if ((player.hp <= 0) && (!player.isInTown)) PlayerDeath(player);
             else if (!player.isInTown)
             {
                 player.xp += enemy1.xp + enemy2.xp;
                 player.gold += enemy1.gold + enemy2.gold;
                 Console.WriteLine("+ " + enemy1.xp + enemy2.xp + " xp" +
-                    "+ " + enemy1.gold + enemy2.gold + " gold");
+                    "\n+ " + enemy1.gold + enemy2.gold + " gold");
             }
         }
-        static void PlayerDeath(Character player, bool isInTown)
+        static void PlayerDeath(Character player)
         {
-        player.xp = 0;
-        player.gold /= 2;
-        Travel(isInTown, player);
-        player.RenewHP();
-        Console.WriteLine("You feel your consciousness fading as a result of your injuries. " +
+            player.xp = 0;
+            player.gold /= 2;
+        
+            player.RenewHP();
+            Console.WriteLine("You feel your consciousness fading as a result of your injuries. " +
                 "\nThen you find yourself waking up back in the town in a bed in the church, your wounds all healed. " +
                 "\nSeems like some other hunters retrieved your body." +
                 "\nxp = 0," +
                 "\ngold halved," +
                 "\nhp restored");
+            Travel(player);
         }
-        static bool Travel(bool isInTown, Character player)
+        static void Travel(Character player)
         {
             bool loop, loop2;
-            if (isInTown)
+            if (player.isInTown)
             {
                 Console.WriteLine("Traveling to dungeon");
-                isInTown = false;
+                player.isInTown = false;
                 List<Room> dungeon = new List<Room>(5);
                 Room room1 = new Room();
                 dungeon.Add(room1);
@@ -274,7 +286,7 @@ namespace game
                 dungeon.Add(room4);
                 Room room5 = new Room();
                 dungeon.Add(room5);
-                while (!isInTown)
+                while (!player.isInTown)
                 {
                     if (dungeon.Count > 1)
                     {
@@ -284,14 +296,15 @@ namespace game
                         loop = false;
                         do
                         {
-                            switch (Console.ReadLine())
+                            string answerA = Console.ReadLine();
+                            switch (answerA)
                             {
                                 case "1":
                                     loop = false;
                                     break;
                                 case "2":
                                     dungeon.Clear();
-                                    Travel(player.isInTown, player);
+                                    Travel(player);
                                     loop = false;
                                     break;
                                 case "3":
@@ -303,9 +316,10 @@ namespace game
                                         + "\nExit[5]");
                                     do
                                     {
+                                        string answerB = Console.ReadLine();
                                         bool useless = false;
                                         loop2 = true;
-                                        switch (Console.ReadLine())
+                                        switch (answerB)
                                         {
                                             case "1":
                                                 player.DrinkHeal(1, useless);
@@ -328,12 +342,15 @@ namespace game
                                         }
                                     } while (loop2);
                                     break;
+                                case "4":
+                                    GenerateSheet(player);
+                                    break;
                             }
 
                             if (Console.ReadLine() == "2")
                             {
                                 dungeon.Clear();
-                                Travel(player.isInTown, player);
+                                Travel(player);
                                 loop = false;
                             }
                             else if (Console.ReadLine() != "1")
@@ -349,7 +366,7 @@ namespace game
                         Console.WriteLine("You beat all the challenges that this dungeon offered and arrive at the final room of the dungeon, the treasure room. " +
                             "\nInside you find a chest filled with " + 10 * player.level + " gold in total. With nothing left to do you leave the dungeon");
                         player.gold += 10 * player.level;
-                        Travel(player.isInTown, player);
+                        Travel(player);
                     }
                 }
             }
@@ -357,27 +374,33 @@ namespace game
             {
                 loop = true;
                 Console.WriteLine("Traveling to town");
-                isInTown = true;
+                player.isInTown = true;
                 Console.WriteLine("You arrive at the town. Here your most important services are the church[1], which offers fully restoring your hp for 2 gold pieces, " +
                     "\nthe Monument[2], which allows adventurers to empower themselves using the hard-earned life force of their enemies," +
                     "\nand the market[3], where you can buy equipment to aid you in your next dungeon exploration." +
-                    "\nAlternatively, you could return to the dungeon[4].");
+                    "\nAlternatively, you could return to the dungeon[4]." +
+                    "\n" +
+                    "\nCheck character profile[5]");
                 while (loop)
                 {
-                    switch (Console.ReadLine())
+                    string answerA = Console.ReadLine();
+                    switch (answerA)
                     {
                         case "1":
-                            ChurchHeal(player, isInTown);
+                            ChurchHeal(player, player.isInTown);
                             break;
                         case "2":
-                            LevelUp(player, isInTown, player.xpCap);
+                            LevelUp(player, player.isInTown, player.xpCap);
                             break;
                         case "3":
                             Market(player);
                             break;
                         case "4":
-                            Travel(player.isInTown, player);
+                            Travel(player);
                             loop = false;
+                            break;
+                        case "5":
+                            GenerateSheet(player);
                             break;
                         default:
                             Console.WriteLine("Invalid answer");
@@ -387,8 +410,7 @@ namespace game
                 }
 
             }
-            else isInTown = true;
-            return isInTown;
+            else player.isInTown = true;
         }
         static void LevelUp(Character player, bool isInTown, int xpCap)
         {
@@ -397,13 +419,12 @@ namespace game
                 bool loop1 = true;
                 bool loop2 = false;
                 do
-                {
-                    
-                    string answerStat = Console.ReadLine();
+                {                    
                     /*switch v s d e*/
                     if (player.xp >= xpCap)
                     {
                         Console.WriteLine("Which stat would you like to raise?");
+                        string answerStat = Console.ReadLine();
                         switch (answerStat)
                         {
                             case "s":
@@ -498,7 +519,8 @@ namespace game
                 "\nWhich option would you like to select?");
             bool loop = true;
             do {
-                switch (Console.ReadLine())
+                string answerA = Console.ReadLine();
+                switch (answerA)
                 {
                     case "1":
                         Healpot minorPotion = new Healpot(1, 1, 1);
@@ -518,7 +540,7 @@ namespace game
                         break;
                     case "5":
                         Weapon dagger = new Weapon(6, 0, 1, 3, 1);
-                        if (player.weaponBonus >= dagger.damageBonus) Console.WriteLine("You already have this or a better weapon");
+                        if (player.weaponBonus > dagger.damageBonus) Console.WriteLine("You already have this or a better weapon");
                         else dagger.BuyOne(player);
                         break;
                     case "6":
@@ -568,7 +590,8 @@ namespace game
         }
         static void GenerateSheet(Character player)
         {
-            Console.WriteLine("hp" + player.hp + "/" + player.vitality * 5 +
+            Console.WriteLine("level " + player.level +
+                "\nhp " + player.hp + "/" + player.vitality * 5 +
                 "\nevasion " + player.evasion +
                 "\nxp " + player.xp + "/" + player.xpCap +
                 "\ngold " + player.gold +

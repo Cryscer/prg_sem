@@ -9,7 +9,7 @@ namespace game
 {
     internal class Character
     {
-        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0, weaponBonus = 0, damageDiceAmount = 1;
+        public int vitality, strength, endurance = 2, dexterity, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0, weaponBonus = 0, damageDiceAmount = 1;
         public string name;
         public bool isAlive = true, isInTown = true;
         public Armor currentArmor = new Armor(0,0,0);   
@@ -19,7 +19,10 @@ namespace game
         public int elixirHealAmount = 0;
 
         public Character(string name ,int strength, int dexterity, int vitality, int damageDice)
-        {           
+        {
+            this.strength = strength;
+            this.dexterity = dexterity;
+            this.vitality = vitality;
             attackBonus = strength + dexterity;
             damageBonus = strength + weaponBonus;
             evasion = 5 + dexterity + armorBonus;
