@@ -36,9 +36,11 @@ namespace game
                 switch (amountOfEnemies)
                 {
                     case 1:
+                        Console.WriteLine("You find a room with an enemy in it. Naturally, you start fighting.");
                         Program.InitiateCombat2(currentEnemy1, player, player.isInTown);
                         break;
                     case 2:
+                        Console.WriteLine("You find a room with 2 enemies in it. Naturally, you start fighting.");
                         Program.InitiateCombat3(currentEnemy1, currentEnemy2, player, player.isInTown);
                         break;
                 }

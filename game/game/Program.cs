@@ -37,11 +37,11 @@ namespace game
                             else
                             {
                                 Console.WriteLine("Which healing potion would you like to use?" +
-                                    "Minor[1] - restores 5hp - " + player.minorHealAmount +
-                                    "Medium[2] - restores 10hp - " + player.mediumHealAmount +
-                                    "Strong[3] - restores 15hp - " + player.strongHealAmount +
-                                    "Elixir of life[4] - fully restores hp - " + player.elixirHealAmount
-                                    + "Exit[5]");
+                                    "\nMinor[1] - restores 5hp - " + player.minorHealAmount +
+                                    "\nMedium[2] - restores 10hp - " + player.mediumHealAmount +
+                                    "\nStrong[3] - restores 15hp - " + player.strongHealAmount +
+                                    "\nElixir of life[4] - fully restores hp - " + player.elixirHealAmount
+                                    + "\nExit[5]");
                                 do
                                 {
                                     loop2 = true;
@@ -166,11 +166,11 @@ namespace game
                             else
                             {
                                 Console.WriteLine("Which healing potion would you like to use?" +
-                                    "Minor[1] - restores 5hp - " + player.minorHealAmount +
-                                    "Medium[2] - restores 10hp - " + player.mediumHealAmount +
-                                    "Strong[3] - restores 15hp - " + player.strongHealAmount +
-                                    "Elixir of life[4] - fully restores hp - " + player.elixirHealAmount
-                                    + "Exit[5]");
+                                    "\nMinor[1] - restores 5hp - " + player.minorHealAmount +
+                                    "\nMedium[2] - restores 10hp - " + player.mediumHealAmount +
+                                    "\nStrong[3] - restores 15hp - " + player.strongHealAmount +
+                                    "\nElixir of life[4] - fully restores hp - " + player.elixirHealAmount
+                                    + "\nExit[5]");
                                 do
                                 {
                                     loop2 = true;
@@ -250,11 +250,11 @@ namespace game
         Travel(isInTown, player);
         player.RenewHP();
         Console.WriteLine("You feel your consciousness fading as a result of your injuries. " +
-                "Then you find yourself waking up back in the town in a bed in the church, your wounds all healed. " +
-                "Seems like some other hunters retrieved your body." +
-                "xp = 0," +
-                "gold halved," +
-                "hp restored");
+                "\nThen you find yourself waking up back in the town in a bed in the church, your wounds all healed. " +
+                "\nSeems like some other hunters retrieved your body." +
+                "\nxp = 0," +
+                "\ngold halved," +
+                "\nhp restored");
         }
         static bool Travel(bool isInTown, Character player)
         {
@@ -274,7 +274,7 @@ namespace game
                 dungeon.Add(room4);
                 Room room5 = new Room();
                 dungeon.Add(room5);
-                while (!player.isInTown)
+                while (!isInTown)
                 {
                     if (dungeon.Count > 1)
                     {
@@ -296,11 +296,11 @@ namespace game
                                     break;
                                 case "3":
                                     Console.WriteLine("Which healing potion would you like to use?" +
-                                        "Minor[1] - restores 5hp - " + player.minorHealAmount +
-                                        "Medium[2] - restores 10hp - " + player.mediumHealAmount +
-                                        "Strong[3] - restores 15hp - " + player.strongHealAmount +
-                                        "Elixir of life[4] - fully restores hp - " + player.elixirHealAmount
-                                        + "Exit[5]");
+                                        "\nMinor[1] - restores 5hp - " + player.minorHealAmount +
+                                        "\nMedium[2] - restores 10hp - " + player.mediumHealAmount +
+                                        "\nStrong[3] - restores 15hp - " + player.strongHealAmount +
+                                        "\nElixir of life[4] - fully restores hp - " + player.elixirHealAmount
+                                        + "\nExit[5]");
                                     do
                                     {
                                         bool useless = false;
@@ -347,7 +347,7 @@ namespace game
                     else
                     {
                         Console.WriteLine("You beat all the challenges that this dungeon offered and arrive at the final room of the dungeon, the treasure room. " +
-                            "Inside you find a chest filled with " + 10 * player.level + " gold in total. With nothing left to do you leave the dungeon");
+                            "\nInside you find a chest filled with " + 10 * player.level + " gold in total. With nothing left to do you leave the dungeon");
                         player.gold += 10 * player.level;
                         Travel(player.isInTown, player);
                     }
@@ -359,9 +359,9 @@ namespace game
                 Console.WriteLine("Traveling to town");
                 isInTown = true;
                 Console.WriteLine("You arrive at the town. Here your most important services are the church[1], which offers fully restoring your hp for 2 gold pieces, " +
-                    "the Monument[2], which allows adventurers to empower themselves using the hard-earned life force of their enemies," +
-                    "and the market[3], where you can buy equipment to aid you in your next dungeon exploration." +
-                    "Alternatively, you could return to the dungeon[4].");
+                    "\nthe Monument[2], which allows adventurers to empower themselves using the hard-earned life force of their enemies," +
+                    "\nand the market[3], where you can buy equipment to aid you in your next dungeon exploration." +
+                    "\nAlternatively, you could return to the dungeon[4].");
                 while (loop)
                 {
                     switch (Console.ReadLine())
@@ -475,27 +475,27 @@ namespace game
         static void Market(Character player)
         {
             Console.WriteLine("Here's the selection of items, their weights and prices" +
-                "Health potions - 1W" +
-                "Minor[1] - restores 5hp - 1G" +
-                "Medium[2] - restores 10hp - 3G" +
-                "Strong[3] - restores 15hp - 5G" +
-                "Elixir of life[4] - fully restores hp - 10G" +
-                "" +
-                "Weapons" +
-                "Dagger[5] - 3G, 1W - increases your damage to d6" +
-                "Shortsword[6] - 6G, 2W - increases damage to 2d4 + 1 bonus damage" +
-                "Longsword[7] - 12G, 3W - increases damage to 2d6 + 2 bonus damage " +
-                "Greatsword[8] - 25G, 4W - increases damage to 3d6 + 3 bonus damage" +
-                "" +
-                "Armour" +
-                "Leather[9] - 5G, 1W - increases evasion by 1 " +
-                "Chain[10] - 10G. 3W - increases evasion by 2" +
-                "Scale[11] - 15G. 4W - increases evasion by 3" +
-                "Plate[12] - 25G. 6W - increases evasion by 4" +
-                "" +
-                "Exit[13]" +
-                "" +
-                "Which option would you like to select?");
+                "\nHealth potions - 1W" +
+                "\nMinor[1] - restores 5hp - 1G" +
+                "\nMedium[2] - restores 10hp - 3G" +
+                "\nStrong[3] - restores 15hp - 5G" +
+                "\nElixir of life[4] - fully restores hp - 10G" +
+                "\n" +
+                "\nWeapons" +
+                "\nDagger[5] - 3G, 1W - increases your damage to d6" +
+                "\nShortsword[6] - 6G, 2W - increases damage to 2d4 + 1 bonus damage" +
+                "\nLongsword[7] - 12G, 3W - increases damage to 2d6 + 2 bonus damage " +
+                "\nGreatsword[8] - 25G, 4W - increases damage to 3d6 + 3 bonus damage" +
+                "\n" +
+                "\nArmor" +
+                "\nLeather[9] - 5G, 1W - increases evasion by 1 " +
+                "\nChain[10] - 10G. 3W - increases evasion by 2" +
+                "\nScale[11] - 15G. 4W - increases evasion by 3" +
+                "\nPlate[12] - 25G. 6W - increases evasion by 4" +
+                "\n" +
+                "\nExit[13]" +
+                "\n" +
+                "\nWhich option would you like to select?");
             bool loop = true;
             do {
                 switch (Console.ReadLine())
@@ -569,13 +569,13 @@ namespace game
         static void GenerateSheet(Character player)
         {
             Console.WriteLine("hp" + player.hp + "/" + player.vitality * 5 +
-                " evasion " + player.evasion +
-                "xp " + player.xp + "/" + player.xpCap +
-                "gold " + player.gold +
-                "attack bonus " + player.attackBonus +
-                "damage bonus " + player.damageBonus +
-                "armor bonus " + player.armorBonus +
-                "weapon dice " + player.damageDiceAmount + "d" + player.damageDice + " + " + player.weaponBonus);
+                "\nevasion " + player.evasion +
+                "\nxp " + player.xp + "/" + player.xpCap +
+                "\ngold " + player.gold +
+                "\nattack bonus " + player.attackBonus +
+                "\ndamage bonus " + player.damageBonus +
+                "\narmor bonus " + player.armorBonus +
+                "\nweapon dice " + player.damageDiceAmount + "d" + player.damageDice + " + " + player.weaponBonus);
         }
     }
 }
