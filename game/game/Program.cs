@@ -8,8 +8,6 @@ namespace game
 {
     internal class Program
     {
-
-
         static void Main(string[] args)
         {
             Character player = new Character("player", 2, 2, 2, 3);                        
@@ -60,7 +58,7 @@ namespace game
             {
                 Console.WriteLine("Traveling to dungeon");
                 isInTown = false;
-                List<Room> dungeon = new List<Room>(10);
+                List<Room> dungeon = new List<Room>(5);
                 Room room1 = new Room();
                 dungeon.Add(room1);
                 Room room2 = new Room();
@@ -100,8 +98,8 @@ namespace game
                     else
                     {
                         Console.WriteLine("You beat all the challenges that this dungeon offered and arrive at the final room of the dungeon, the treasure room. " +
-                            "Inside you find a chest filled to the brim with 100 gold in total. With nothing left to do you leave the dungeon");
-                        player.gold += 100;
+                            "Inside you find a chest filled with " + 10 * player.level + " gold in total. With nothing left to do you leave the dungeon");
+                        player.gold += 10 * player.level;
                         Travel(player.isInTown, player);
                     }
                 }
@@ -126,6 +124,7 @@ namespace game
                             LevelUp(player, isInTown, player.xpCap);
                             break;
                         case "3":
+                            Market(player);
                             break;
                         case "4":
                             Travel(player.isInTown, player);
@@ -183,6 +182,7 @@ namespace game
                                 Console.WriteLine("Endurance raised, carry capacity improved. Remaining xp:" + player.xp + ", " + player.xpCap + " needed to level up forther");
                                 break;
                         }
+                        player.level += 1;
                         do
                         {
                             Console.WriteLine("Would you like to level up again?y/n");
@@ -239,58 +239,75 @@ namespace game
                 "Greatsword[8] - 25G, 4W - increases damage to 3d6 + 3 bonus damage" +
                 "" +
                 "Armour" +
-                "Leather[9] - 1W, 5G - increases evasion by 1 " +
-                "Chain[10] - 3W. 10G - increases evasion by 2" +
-                "Scale[11] - 4W. 15G - increases evasion by 3" +
-                "Plate[12] - 6W. 25G - increases evasion by 4" +
+                "Leather[9] - 5G, 1W - increases evasion by 1 " +
+                "Chain[10] - 10G. 3W - increases evasion by 2" +
+                "Scale[11] - 15G. 4W - increases evasion by 3" +
+                "Plate[12] - 25G. 6W - increases evasion by 4" +
                 "" +
-                "Exit[13]");
-            
-            switch (Console.ReadLine())
-            {
-                case "1":
-                    bool loop = false;
-                    int answerAmount = 1;
-                    do
-                    {
-                        Console.WriteLine("How many would you like to buy?");
-                        try
-                        {
-                            answerAmount = int.Parse(Console.ReadLine());
-                        }
-                        catch (Exception) { loop = true; }
-                    } while (loop);
-                    if ((player.gold > answerAmount) && ((player.weightLoad += answerAmount * 1) <= player.weightCap)) { }
-                    else if ((player.gold < answerAmount) && ((player.weightLoad += answerAmount * 1) <= player.weightCap)) Console.WriteLine("Not enough gold!");
-                    else if ((player.gold > answerAmount) && ((player.weightLoad += answerAmount * 1) > player.weightCap)) Console.WriteLine("Not enough weight capacity!");
-                    else Console.WriteLine("Not enough weight capcacity and gold!");
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
-                case "4":
-                    break;
-                case "5":
-                    break;
-                case "6":
-                    break;
-                case "7":
-                    break;
-                case "8":
-                    break;
-                case "9":
-                    break;
-                case "10":
-                    break;
-                case "11":
-                    break;
-                case "12":
-                    break;
-                case "13":
-                    break;
-
-            }
+                "Exit[13]" +
+                "" +
+                "Which option would you like to select?");
+            bool loop = true;
+            do {
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        Healpot minorPotion = new Healpot(1, 1, 1);
+                        minorPotion.BuyMany(player);
+                        break;
+                    case "2":
+                        Healpot mediumPotion = new Healpot(2, 3, 1);
+                        mediumPotion.BuyMany(player);
+                        break;
+                    case "3":
+                        Healpot strongPotion = new Healpot(3, 5, 1);
+                        strongPotion.BuyMany(player);
+                        break;
+                    case "4":
+                        Healpot elixirPotion = new Healpot(4, 10, 1);
+                        elixirPotion.BuyMany(player);
+                        break;
+                    case "5":
+                        Weapon dagger = new Weapon(6, 0, 1, 3, 1);
+                        dagger.BuyOne(player);
+                        break;
+                    case "6":
+                        Weapon shortsword = new Weapon(4, 1, 2, 6, 2);
+                        shortsword.BuyOne(player);
+                        break;
+                    case "7":
+                        Weapon longsword = new Weapon(6, 2, 2, 12, 3);
+                        longsword.BuyOne(player);
+                        break;
+                    case "8":
+                        Weapon greatsword = new Weapon(6, 3, 3, 25, 4);
+                        greatsword.BuyOne(player);
+                        break;
+                    case "9":
+                        Armor leather = new Armor(1, 5, 1);
+                        leather.BuyOne(player);
+                        break;
+                    case "10":
+                        Armor chain = new Armor(2, 10, 3);
+                        chain.BuyOne(player);
+                        break;
+                    case "11":
+                        Armor scale = new Armor(3, 15, 4);
+                        scale.BuyOne(player);
+                        break;
+                    case "12":
+                        Armor plate = new Armor(4, 25, 6);
+                        plate.BuyOne(player);
+                        break;
+                    case "13":
+                        loop = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid answer!");
+                        break;                            
+                }
+                Console.WriteLine("Anything else?");
+            } while (loop);
         }
     }
 }

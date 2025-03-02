@@ -8,14 +8,19 @@ namespace game
 {
     internal class Character
     {
-        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0;
+        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0, weaponBonus = 0, damageDiceAmount = 0;
         public string name;
-        public bool isAlive = true, isInTown = false;        
+        public bool isAlive = true, isInTown = false;
+        public Armor currentArmor = new Armor(0,0,0);   
+        public int minorHealAmount = 0;
+        public int mediumHealAmount = 0;
+        public int strongHealAmount = 0;
+        public int elixirHealAmount = 0;
 
         public Character(string name ,int strength, int dexterity, int vitality, int damageDice)
         {           
             attackBonus = strength + dexterity;
-            damageBonus = strength;
+            damageBonus = strength + weaponBonus;
             evasion = 5 + dexterity + armorBonus;
             hp = 5 * vitality;
             this.damageDice = damageDice;
@@ -36,7 +41,7 @@ namespace game
                 if (chance < defender.evasion) Console.WriteLine("Miss");
                 else
                 {
-                    int damage = rng.Next(1, damageDice + 1) + damageBonus;
+                    int damage = rng.Next(1, damageDice + 1) * damageDiceAmount + damageBonus;
                     defender.hp -= damage;
                     Console.WriteLine("Attack dealt " + damage + " damage");
                     Console.WriteLine(defender.name + " has " + defender.hp + " hp left");
@@ -51,10 +56,12 @@ namespace game
         }
         public void RenewStats()
         {
+            armorBonus = currentArmor.armorBonus;
             attackBonus = strength + dexterity;
-            damageBonus = strength;
+            damageBonus = strength + weaponBonus;
             evasion = 10 + dexterity + armorBonus;            
             xpCap = level * 3;
+            
         }
         public void RenewHP()
         {
