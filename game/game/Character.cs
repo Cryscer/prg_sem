@@ -8,7 +8,7 @@ namespace game
 {
     internal class Character
     {
-        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap;
+        public int vitality = 1, strength = 1, endurance = 1, dexterity = 1, attackBonus, damageBonus, evasion, hp, damageDice, weightLoad, xp, level, gold, xpCap, weightCap, armorBonus = 0;
         public string name;
         public bool isAlive = true, isInTown = false;        
 
@@ -16,11 +16,12 @@ namespace game
         {           
             attackBonus = strength + dexterity;
             damageBonus = strength;
-            evasion = 5 + dexterity;
+            evasion = 5 + dexterity + armorBonus;
             hp = 5 * vitality;
             this.damageDice = damageDice;
             this.name = name;
-            weightLoad = 3 * endurance;
+            weightCap = 3 * endurance;
+            weightLoad = 0;
             level = 1;
             gold = 1;
             xpCap = level * 3;
@@ -52,8 +53,7 @@ namespace game
         {
             attackBonus = strength + dexterity;
             damageBonus = strength;
-            evasion = 10 + dexterity;            
-            damageDice = 6;
+            evasion = 10 + dexterity + armorBonus;            
             xpCap = level * 3;
         }
         public void RenewHP()

@@ -44,9 +44,9 @@ namespace game
         {
         player.xp = 0;
         player.gold /= 2;
-        player.RenewHP();
         Travel(isInTown, player);
-            Console.WriteLine("You feel your consciousness fading as a result of your injuries. " +
+        player.RenewHP();
+        Console.WriteLine("You feel your consciousness fading as a result of your injuries. " +
                 "Then you find yourself waking up back in the town in a bed in the church, your wounds all healed. " +
                 "Seems like some other hunters retrieved your body." +
                 "xp = 0," +
@@ -106,14 +106,14 @@ namespace game
                     }
                 }
             }
-            else
+            else if (player.hp > 0)
             {
                 loop = true;
                 Console.WriteLine("Traveling to town");
                 isInTown = true;
                 Console.WriteLine("You arrive at the town. Here your most important services are the church[1], which offers fully restoring your hp for 2 gold pieces, " +
                     "the Monument[2], which allows adventurers to empower themselves using the hard-earned life force of their enemies," +
-                    "and the market[3], where you can buy equipment and sell things obtained from the dungeon." +
+                    "and the market[3], where you can buy equipment to aid you in your next dungeon exploration." +
                     "Alternatively, you could return to the dungeon[4].");
                 while (loop)
                 {
@@ -131,11 +131,15 @@ namespace game
                             Travel(player.isInTown, player);
                             loop = false;
                             break;
+                        default:
+                            Console.WriteLine("Invalid answer");
+                            break;
                     }
                     if (loop) Console.WriteLine("Where would you like to go next? The church[1], the Monument[2], the market[3] or the dungeon[4]?");
                 }
 
             }
+            else isInTown = true;
             return isInTown;
         }
         static void LevelUp(Character player, bool isInTown, int xpCap)
@@ -218,6 +222,75 @@ namespace game
                 }
             }
             else Console.WriteLine("Must be in Town!");
+        }
+        static void Market(Character player)
+        {
+            Console.WriteLine("Here's the selection of items, their weights and prices" +
+                "Health potions - 1W" +
+                "Minor[1] - restores 5hp - 1G" +
+                "Medium[2] - restores 10hp - 3G" +
+                "Strong[3] - restores 15hp - 5G" +
+                "Elixir of life[4] - fully restores hp - 10G" +
+                "" +
+                "Weapons" +
+                "Dagger[5] - 3G, 1W - increases your damage to d6" +
+                "Shortsword[6] - 6G, 2W - increases damage to 2d4 + 1 bonus damage" +
+                "Longsword[7] - 12G, 3W - increases damage to 2d6 + 2 bonus damage " +
+                "Greatsword[8] - 25G, 4W - increases damage to 3d6 + 3 bonus damage" +
+                "" +
+                "Armour" +
+                "Leather[9] - 1W, 5G - increases evasion by 1 " +
+                "Chain[10] - 3W. 10G - increases evasion by 2" +
+                "Scale[11] - 4W. 15G - increases evasion by 3" +
+                "Plate[12] - 6W. 25G - increases evasion by 4" +
+                "" +
+                "Exit[13]");
+            
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    bool loop = false;
+                    int answerAmount = 1;
+                    do
+                    {
+                        Console.WriteLine("How many would you like to buy?");
+                        try
+                        {
+                            answerAmount = int.Parse(Console.ReadLine());
+                        }
+                        catch (Exception) { loop = true; }
+                    } while (loop);
+                    if ((player.gold > answerAmount) && ((player.weightLoad += answerAmount * 1) <= player.weightCap)) { }
+                    else if ((player.gold < answerAmount) && ((player.weightLoad += answerAmount * 1) <= player.weightCap)) Console.WriteLine("Not enough gold!");
+                    else if ((player.gold > answerAmount) && ((player.weightLoad += answerAmount * 1) > player.weightCap)) Console.WriteLine("Not enough weight capacity!");
+                    else Console.WriteLine("Not enough weight capcacity and gold!");
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    break;
+                case "8":
+                    break;
+                case "9":
+                    break;
+                case "10":
+                    break;
+                case "11":
+                    break;
+                case "12":
+                    break;
+                case "13":
+                    break;
+
+            }
         }
     }
 }
