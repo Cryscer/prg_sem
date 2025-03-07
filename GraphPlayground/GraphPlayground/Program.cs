@@ -10,11 +10,19 @@ namespace GraphPlayground
 {
     internal class Program
     {
-        public static void DFS(Graph graph, Node startNode, Node targetNode = null)
+        public static void DFS(Node currentNode)
         {
-            Node currentNode = startNode;
-            List<Node> visited = new List<Node>();
-            while (visited.Count < graph.nodes.Count) { }
+            Console.WriteLine("Current node: " + currentNode.index);
+            currentNode.visited = true;
+            foreach (Node neighbor in currentNode.neighbors)
+            {
+                if (!neighbor.visited)
+                {
+                    DFS(neighbor);
+                }
+                else Console.WriteLine("neighbor " + neighbor.index + " already visited");
+            }
+
             /*while (startNode.neighbors.Find(node => !node.visited) != default(Node)) ;*/
             
             /*bool shouldContinue = true;
@@ -68,7 +76,7 @@ namespace GraphPlayground
 
             //Call both algorithms with a random starting node
             Random rng = new Random();
-            DFS(graph, graph.nodes[rng.Next(0, graph.nodes.Count)]);
+            DFS(graph.nodes[rng.Next(0, graph.nodes.Count)]);
             BFS(graph, graph.nodes[rng.Next(0, graph.nodes.Count)]);
 
             Console.ReadKey();
