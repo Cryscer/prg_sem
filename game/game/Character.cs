@@ -17,6 +17,7 @@ namespace game
         public int mediumHealAmount = 0;
         public int strongHealAmount = 0;
         public int elixirHealAmount = 0;
+        public Weapon currentWeapon = new Weapon(3, 0, 1, 0, 0);
 
         public Character(string name, int strength, int dexterity, int vitality, int damageDice, int xp, int gold, int weaponBonus, int damageDiceAmount)
         {
@@ -88,6 +89,7 @@ namespace game
                         if ((hp + 5) <= (5 * vitality)) hp += 5;
                         else RenewHP();
                         minorHealAmount--;
+                        weightLoad--;
                         used = true;
                     }
                     else Console.WriteLine("Invalid answer!");
@@ -98,6 +100,7 @@ namespace game
                         if ((hp + 10) <= (5 * vitality)) hp += 10;
                         else RenewHP();
                         mediumHealAmount--;
+                        weightLoad--;
                         used = true;
                     }
                     else Console.WriteLine("Invalid answer!");
@@ -108,6 +111,7 @@ namespace game
                         if ((hp + 15) <= (5 * vitality)) hp += 15;
                         else RenewHP();
                         strongHealAmount--;
+                        weightLoad--;
                         used = true;
                     }
                     else Console.WriteLine("Invalid answer!");
@@ -117,6 +121,7 @@ namespace game
                     {
                         RenewHP();
                         elixirHealAmount--;
+                        weightLoad--;
                         used = true;
                     }
                     else Console.WriteLine("Invalid answer!");

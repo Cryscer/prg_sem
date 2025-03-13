@@ -17,6 +17,7 @@ namespace game
         }
         override public void GiveToPlayer(Character player)
         {
+            player.weightLoad -= player.currentArmor.weight;
             player.currentArmor = this;
             player.RenewStats();
         }

@@ -30,7 +30,7 @@ namespace game
                     break;
                 case 4:
                     player.elixirHealAmount++; 
-                break;
+                    break;
             }
         }
     }

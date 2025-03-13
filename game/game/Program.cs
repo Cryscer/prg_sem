@@ -10,6 +10,8 @@ namespace game
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Welcome to dungeon delver. In this world full of dungeons and monsters that live inside them, you're one of the many that explore these dungeons" +
+                "in search of treasure. You open your eyes after a short nap and look around. Right now you're in a dungeon, exploring the cold rooms, looking for monsters to slay.\n");
             Character player = new Character("player", 2, 2, 2, 3, 0, 0, 0, 1);
             Travel(player);
             Console.ReadLine();

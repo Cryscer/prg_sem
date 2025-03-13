@@ -18,9 +18,8 @@ namespace game
         }
         public override void GiveToPlayer(Character player)
         {
-            player.weaponBonus = damageBonus;
-            player.damageDice = damageDice;
-            player.damageDiceAmount = damageDieAmount;
+            player.weightLoad -= player.currentWeapon.weight;
+            player.currentWeapon = this;
             player.RenewStats();
         }
     }
