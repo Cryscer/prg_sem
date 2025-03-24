@@ -14,6 +14,7 @@ namespace paint
     {
         System.Drawing.Point lastPosition;
         Graphics g;
+        bool mousePressed;
         public Form1()
         {
             InitializeComponent();
@@ -21,14 +22,23 @@ namespace paint
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {           
-            g.DrawLine(Pens.Black, e.Location, lastPosition);  
-            lastPosition = e.Location;
+        {
+            if (mousePressed)
+            {
+                g.DrawLine(Pens.Black, e.Location, lastPosition);
+                lastPosition = e.Location;
+            }
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            mousePressed = true;
+            lastPosition = e.Location;
+        }
+
+        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mousePressed = false;
         }
     }
 }
