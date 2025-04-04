@@ -35,6 +35,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonPen = new System.Windows.Forms.Button();
             this.buttonEllipse = new System.Windows.Forms.Button();
+            this.buttonFillObject = new System.Windows.Forms.Button();
+            this.buttonRectangle = new System.Windows.Forms.Button();
+            this.buttonLine = new System.Windows.Forms.Button();
+            this.buttonImage = new System.Windows.Forms.Button();
+            this.buttonEraser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,15 +107,70 @@
             this.buttonEllipse.Name = "buttonEllipse";
             this.buttonEllipse.Size = new System.Drawing.Size(73, 34);
             this.buttonEllipse.TabIndex = 6;
-            this.buttonEllipse.Text = "O";
+            this.buttonEllipse.Text = "Ellipse";
             this.buttonEllipse.UseVisualStyleBackColor = true;
             this.buttonEllipse.Click += new System.EventHandler(this.buttonEllipse_Click);
+            // 
+            // buttonFillObject
+            // 
+            this.buttonFillObject.Location = new System.Drawing.Point(448, 89);
+            this.buttonFillObject.Name = "buttonFillObject";
+            this.buttonFillObject.Size = new System.Drawing.Size(73, 34);
+            this.buttonFillObject.TabIndex = 7;
+            this.buttonFillObject.Text = "Fill";
+            this.buttonFillObject.UseVisualStyleBackColor = true;
+            this.buttonFillObject.Click += new System.EventHandler(this.buttonFillObject_Click);
+            // 
+            // buttonRectangle
+            // 
+            this.buttonRectangle.Location = new System.Drawing.Point(606, 140);
+            this.buttonRectangle.Name = "buttonRectangle";
+            this.buttonRectangle.Size = new System.Drawing.Size(73, 33);
+            this.buttonRectangle.TabIndex = 8;
+            this.buttonRectangle.Text = "Rectangle";
+            this.buttonRectangle.UseVisualStyleBackColor = true;
+            this.buttonRectangle.Click += new System.EventHandler(this.buttonRectangle_Click);
+            // 
+            // buttonLine
+            // 
+            this.buttonLine.Location = new System.Drawing.Point(685, 140);
+            this.buttonLine.Name = "buttonLine";
+            this.buttonLine.Size = new System.Drawing.Size(73, 33);
+            this.buttonLine.TabIndex = 9;
+            this.buttonLine.Text = "Line";
+            this.buttonLine.UseVisualStyleBackColor = true;
+            this.buttonLine.Click += new System.EventHandler(this.buttonLine_Click);
+            // 
+            // buttonImage
+            // 
+            this.buttonImage.Location = new System.Drawing.Point(764, 140);
+            this.buttonImage.Name = "buttonImage";
+            this.buttonImage.Size = new System.Drawing.Size(73, 33);
+            this.buttonImage.TabIndex = 10;
+            this.buttonImage.Text = "Image";
+            this.buttonImage.UseVisualStyleBackColor = true;
+            this.buttonImage.Click += new System.EventHandler(this.buttonImage_Click);
+            // 
+            // buttonEraser
+            // 
+            this.buttonEraser.Location = new System.Drawing.Point(449, 179);
+            this.buttonEraser.Name = "buttonEraser";
+            this.buttonEraser.Size = new System.Drawing.Size(72, 33);
+            this.buttonEraser.TabIndex = 11;
+            this.buttonEraser.Text = "Eraser";
+            this.buttonEraser.UseVisualStyleBackColor = true;
+            this.buttonEraser.Click += new System.EventHandler(this.buttonEraser_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(893, 574);
+            this.Controls.Add(this.buttonEraser);
+            this.Controls.Add(this.buttonImage);
+            this.Controls.Add(this.buttonLine);
+            this.Controls.Add(this.buttonRectangle);
+            this.Controls.Add(this.buttonFillObject);
             this.Controls.Add(this.buttonEllipse);
             this.Controls.Add(this.buttonPen);
             this.Controls.Add(this.label1);
@@ -135,6 +195,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonPen;
         private System.Windows.Forms.Button buttonEllipse;
+        private System.Windows.Forms.Button buttonFillObject;
+        private System.Windows.Forms.Button buttonRectangle;
+        private System.Windows.Forms.Button buttonLine;
+        private System.Windows.Forms.Button buttonImage;
+        private System.Windows.Forms.Button buttonEraser;
     }
 }
 

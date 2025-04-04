@@ -16,18 +16,26 @@ namespace paint
         System.Drawing.Point lastPosition;
         Graphics g;
         bool mousePressed;
-        Pen mainPen = new Pen(Color.Black, 1);
+        Color mainColor = Color.Black;
+        float width = 1;
+        Pen mainPen;
+        Brush mainBrush;
+        Brush testBrush;
+        Region mainRegion;
         string tool = "pen";
-        GraphicsState newState;
+        bool filled = false;
         public Form1()
         {
             InitializeComponent();
             g = panel1.CreateGraphics();
-            newState = g.Save();
+            mainBrush = new SolidBrush(mainColor);
+            mainPen = new Pen(mainColor, width);           
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
+            testBrush = new LinearGradientBrush(lastPosition,e.Location, Color.Blue, Color.Red);
+            mainPen = new Pen(testBrush, width);
             if (mousePressed)
             {
                 switch (tool)
@@ -35,11 +43,10 @@ namespace paint
                     case "pen":
                         g.DrawLine(mainPen, e.Location, lastPosition);
                         lastPosition = e.Location;
-                        newState = g.Save();
                         break;
-                    case "ellipse":
-                        g.Restore(newState);
-                        g.DrawEllipse(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+                    case "eraser":
+                        mainRegion = new Region(new Rectangle((int)(e.X - width), (int)(e.Y - width), (int)(2 * width), (int)(2 * width)));
+                        panel1.Invalidate(mainRegion);
                         break;
                 }
             }
@@ -54,7 +61,11 @@ namespace paint
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             mousePressed = false;
-            newState = g.Save();
+            if ((tool == "ellipse") && (filled = false)) g.DrawEllipse(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if ((tool == "ellipse") && (filled = true)) g.FillEllipse(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if ((tool == "rectangle") && (filled = false)) g.DrawRectangle(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if ((tool == "rectangle") && (filled = true)) g.FillRectangle(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if (tool == "line") g.DrawLine(mainPen, lastPosition.X, lastPosition.Y, e.X, e.Y);
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -67,12 +78,15 @@ namespace paint
             ColorDialog myColorDialog = new ColorDialog();
             myColorDialog.Color = mainPen.Color;
             myColorDialog.ShowDialog();
-            mainPen.Color = myColorDialog.Color;
+            mainColor = myColorDialog.Color;
+            mainBrush = new SolidBrush(mainColor);
+            mainPen = new Pen(mainColor, width);
         }
 
         private void trackBarPen_Scroll(object sender, EventArgs e)
         {
-            mainPen.Width = trackBarPen.Value;
+            width = trackBarPen.Value;
+            mainPen = new Pen(mainColor, width);
         }
 
         private void buttonElipsa_Click(object sender, EventArgs e)
@@ -83,6 +97,32 @@ namespace paint
         private void buttonEllipse_Click(object sender, EventArgs e)
         {
             tool = "ellipse";
+        }
+
+        private void buttonFillObject_Click(object sender, EventArgs e)
+        {
+            if (filled == false) filled = true;
+            else filled = false;
+        }
+
+        private void buttonRectangle_Click(object sender, EventArgs e)
+        {
+            tool = "rectangle";
+        }
+
+        private void buttonLine_Click(object sender, EventArgs e)
+        {
+            tool = "line";
+        }
+
+        private void buttonImage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonEraser_Click(object sender, EventArgs e)
+        {
+            tool = "eraser";
         }
     }
 }
