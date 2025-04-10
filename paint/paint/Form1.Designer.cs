@@ -40,6 +40,7 @@
             this.buttonLine = new System.Windows.Forms.Button();
             this.buttonImage = new System.Windows.Forms.Button();
             this.buttonEraser = new System.Windows.Forms.Button();
+            this.buttonCrayon = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,11 +162,22 @@
             this.buttonEraser.UseVisualStyleBackColor = true;
             this.buttonEraser.Click += new System.EventHandler(this.buttonEraser_Click);
             // 
+            // buttonCrayon
+            // 
+            this.buttonCrayon.Location = new System.Drawing.Point(527, 179);
+            this.buttonCrayon.Name = "buttonCrayon";
+            this.buttonCrayon.Size = new System.Drawing.Size(72, 33);
+            this.buttonCrayon.TabIndex = 12;
+            this.buttonCrayon.Text = "Crayon";
+            this.buttonCrayon.UseVisualStyleBackColor = true;
+            this.buttonCrayon.Click += new System.EventHandler(this.buttonCrayon_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(893, 574);
+            this.Controls.Add(this.buttonCrayon);
             this.Controls.Add(this.buttonEraser);
             this.Controls.Add(this.buttonImage);
             this.Controls.Add(this.buttonLine);
@@ -200,6 +212,7 @@
         private System.Windows.Forms.Button buttonLine;
         private System.Windows.Forms.Button buttonImage;
         private System.Windows.Forms.Button buttonEraser;
+        private System.Windows.Forms.Button buttonCrayon;
     }
 }
 

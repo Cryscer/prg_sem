@@ -20,7 +20,6 @@ namespace paint
         float width = 1;
         Pen mainPen;
         Brush mainBrush;
-        Brush testBrush;
         Region mainRegion;
         string tool = "pen";
         bool filled = false;
@@ -33,9 +32,7 @@ namespace paint
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {
-            testBrush = new LinearGradientBrush(lastPosition,e.Location, Color.Blue, Color.Red);
-            mainPen = new Pen(testBrush, width);
+        {            
             if (mousePressed)
             {
                 switch (tool)
@@ -47,6 +44,10 @@ namespace paint
                     case "eraser":
                         mainRegion = new Region(new Rectangle((int)(e.X - width), (int)(e.Y - width), (int)(2 * width), (int)(2 * width)));
                         panel1.Invalidate(mainRegion);
+                        break;
+                    case "crayon":
+                        g.DrawLine(mainPen, e.Location, lastPosition);
+                        lastPosition = e.Location;
                         break;
                 }
             }
@@ -79,19 +80,30 @@ namespace paint
             myColorDialog.Color = mainPen.Color;
             myColorDialog.ShowDialog();
             mainColor = myColorDialog.Color;
-            mainBrush = new SolidBrush(mainColor);
-            mainPen = new Pen(mainColor, width);
+            if (tool == "crayon")
+            {
+                mainBrush = new SolidBrush(Color.FromArgb(125, mainColor));
+                mainPen = new Pen(Color.FromArgb(125, mainColor), width);
+            }
+            else
+            {
+                mainBrush = new SolidBrush(mainColor);
+                mainPen = new Pen(mainColor, width);
+            }
         }
 
         private void trackBarPen_Scroll(object sender, EventArgs e)
         {
             width = trackBarPen.Value;
-            mainPen = new Pen(mainColor, width);
+            if (tool == "crayon") mainPen = new Pen(Color.FromArgb(125, mainColor), width);
+            else mainPen = new Pen(mainColor, width);
         }
 
         private void buttonElipsa_Click(object sender, EventArgs e)
         {
             tool = "pen";
+            mainBrush = new SolidBrush(Color.FromArgb(255, mainColor));
+            mainPen = new Pen(Color.FromArgb(255, mainColor), width);
         }
 
         private void buttonEllipse_Click(object sender, EventArgs e)
@@ -123,6 +135,13 @@ namespace paint
         private void buttonEraser_Click(object sender, EventArgs e)
         {
             tool = "eraser";
+        }
+
+        private void buttonCrayon_Click(object sender, EventArgs e) //přidal jsme voskovku
+        {
+            tool = "crayon";
+            mainBrush = new SolidBrush(Color.FromArgb(125, mainColor));
+            mainPen = new Pen(Color.FromArgb(125, mainColor), width);
         }
     }
 }
