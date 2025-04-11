@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace paint
 {
@@ -23,12 +24,17 @@ namespace paint
         Region mainRegion;
         string tool = "pen";
         bool filled = false;
+        Bitmap image;
+        List<string> images = new List<string>();
+
+
         public Form1()
         {
             InitializeComponent();
             g = panel1.CreateGraphics();
             mainBrush = new SolidBrush(mainColor);
-            mainPen = new Pen(mainColor, width);           
+            mainPen = new Pen(mainColor, width);
+            image = Properties.Resources.house;
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
@@ -56,17 +62,18 @@ namespace paint
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             mousePressed = true;
-            lastPosition = e.Location;
+            lastPosition = e.Location;           
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             mousePressed = false;
-            if ((tool == "ellipse") && (filled = false)) g.DrawEllipse(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
-            else if ((tool == "ellipse") && (filled = true)) g.FillEllipse(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
-            else if ((tool == "rectangle") && (filled = false)) g.DrawRectangle(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
-            else if ((tool == "rectangle") && (filled = true)) g.FillRectangle(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            if ((tool == "ellipse") && (filled == false)) g.DrawEllipse(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if ((tool == "ellipse") && (filled == true)) g.FillEllipse(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if ((tool == "rectangle") && (filled == false)) g.DrawRectangle(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
+            else if ((tool == "rectangle") && (filled == true)) g.FillRectangle(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
             else if (tool == "line") g.DrawLine(mainPen, lastPosition.X, lastPosition.Y, e.X, e.Y);
+            else if (tool == "image") g.DrawImage(image, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -129,7 +136,13 @@ namespace paint
 
         private void buttonImage_Click(object sender, EventArgs e)
         {
-
+            tool = "image";           
+            listBox1.BeginUpdate();
+            listBox1.Items.Clear();
+            listBox1.Items.Add(nameof(Properties.Resources.Mlok));
+            listBox1.Items.Add(nameof(Properties.Resources.gigamlok));
+            listBox1.Items.Add(nameof(Properties.Resources.house));
+            listBox1.EndUpdate();
         }
 
         private void buttonEraser_Click(object sender, EventArgs e)
@@ -142,6 +155,23 @@ namespace paint
             tool = "crayon";
             mainBrush = new SolidBrush(Color.FromArgb(125, mainColor));
             mainPen = new Pen(Color.FromArgb(125, mainColor), width);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (listBox1.SelectedIndex)
+            {
+                case 0:
+                    image = Properties.Resources.Mlok;                   
+                    break;
+                case 1:
+                    image = Properties.Resources.gigamlok;
+                    break;
+                case 2:
+                    image = Properties.Resources.house;
+                    break;
+            }
+            pictureBox1.Image = image;
         }
     }
 }

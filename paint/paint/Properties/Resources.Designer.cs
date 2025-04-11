@@ -61,42 +61,32 @@ namespace paint.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] cat {
-            get {
-                object obj = ResourceManager.GetObject("cat", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] gigamlok {
+        internal static System.Drawing.Bitmap gigamlok {
             get {
                 object obj = ResourceManager.GetObject("gigamlok", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] mlok {
+        internal static System.Drawing.Bitmap house {
             get {
-                object obj = ResourceManager.GetObject("mlok", resourceCulture);
-                return ((byte[])(obj));
+                object obj = ResourceManager.GetObject("house", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] shark {
+        internal static System.Drawing.Bitmap Mlok {
             get {
-                object obj = ResourceManager.GetObject("shark", resourceCulture);
-                return ((byte[])(obj));
+                object obj = ResourceManager.GetObject("Mlok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

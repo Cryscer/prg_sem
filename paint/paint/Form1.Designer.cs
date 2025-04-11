@@ -41,7 +41,10 @@
             this.buttonImage = new System.Windows.Forms.Button();
             this.buttonEraser = new System.Windows.Forms.Button();
             this.buttonCrayon = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -144,7 +147,7 @@
             // 
             // buttonImage
             // 
-            this.buttonImage.Location = new System.Drawing.Point(764, 140);
+            this.buttonImage.Location = new System.Drawing.Point(125, 287);
             this.buttonImage.Name = "buttonImage";
             this.buttonImage.Size = new System.Drawing.Size(73, 33);
             this.buttonImage.TabIndex = 10;
@@ -172,11 +175,32 @@
             this.buttonCrayon.UseVisualStyleBackColor = true;
             this.buttonCrayon.Click += new System.EventHandler(this.buttonCrayon_Click);
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(23, 287);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(74, 121);
+            this.listBox1.TabIndex = 13;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point(112, 342);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(102, 66);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(893, 574);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.buttonCrayon);
             this.Controls.Add(this.buttonEraser);
             this.Controls.Add(this.buttonImage);
@@ -193,6 +217,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,6 +238,8 @@
         private System.Windows.Forms.Button buttonImage;
         private System.Windows.Forms.Button buttonEraser;
         private System.Windows.Forms.Button buttonCrayon;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

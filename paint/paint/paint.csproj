@@ -80,5 +80,23 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png-clipart-house-jpeg-housing-estate-griya-kopkarin-permai-house-angle-text-thumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mlok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mlok.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\20468693201_19cee6025d_b.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
