@@ -25,16 +25,12 @@ namespace paint
         string tool = "pen";
         bool filled = false;
         Bitmap image;
-        List<string> images = new List<string>();
-
-
         public Form1()
         {
             InitializeComponent();
             g = panel1.CreateGraphics();
             mainBrush = new SolidBrush(mainColor);
             mainPen = new Pen(mainColor, width);
-            image = Properties.Resources.house;
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
@@ -67,7 +63,7 @@ namespace paint
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            mousePressed = false;
+            mousePressed = false;          
             if ((tool == "ellipse") && (filled == false)) g.DrawEllipse(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
             else if ((tool == "ellipse") && (filled == true)) g.FillEllipse(mainBrush, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
             else if ((tool == "rectangle") && (filled == false)) g.DrawRectangle(mainPen, lastPosition.X, lastPosition.Y, e.X - lastPosition.X, e.Y - lastPosition.Y);
